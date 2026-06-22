@@ -1,0 +1,285 @@
+[
+  {
+    "entity": "Remote acquisition and purchase of cell phone location information",
+    "description": "Using cell site simulators and commercially purchased cell phone location data—such as the data that powers geographically targeted advertisements —DHS can determine all the devices that were in a certain location at a given time (e.g. at a protest) and track specific devices over time, revealing frequented addresses, associations, and other intimate life details.",
+    "totalOverall": 35100000,
+    "companies": [
+      {
+        "name": "Penlink",
+        "agencies": [
+          "CBP",
+          "ICE"
+        ],
+        "overall": 10000000,
+        "yearly": {
+          "2026": 2900000,
+          "2025": 2900000,
+          "2024": 1400000,
+          "2023": 1400000,
+          "2022": 813000,
+          "2021": 587000
+        }
+      },
+      {
+        "name": "Babel Street",
+        "agencies": [
+          "CBP",
+          "ICE",
+          "USSS"
+        ],
+        "overall": 23100000,
+        "yearly": {
+          "2026": 10300000,
+          "2024": 3600000,
+          "2023": 3600000,
+          "2022": 929000,
+          "2021": 4700000
+        }
+      },
+      {
+        "name": "Techops Specialty Vehicles",
+        "agencies": [
+          "ICE"
+        ],
+        "overall": 1600000,
+        "yearly": {
+          "2026": 826000,
+          "2025": 818000
+        }
+      },
+      {
+        "name": "Relx (Lexis Nexis)",
+        "agencies": [
+          "USSS"
+        ],
+        "overall": 280000,
+        "yearly": {
+          "2024": 95000,
+          "2023": 45000,
+          "2022": 140000
+        }
+      },
+      {
+        "name": "Motorola",
+        "agencies": [
+          "CBP"
+        ],
+        "overall": 143000,
+        "yearly": {
+          "2025": 94000,
+          "2024": 59000
+        }
+      }
+    ],
+    "sourceLinks": [
+      {
+        "label": "EFF: The Government Uses Targeted Advertising to Track Your Location. Here's What We Need to Do (Mar. 2026)",
+        "url": "https://www.eff.org/deeplinks/2026/03/targeted-advertising-gives-your-location-government-just-ask-cbp"
+      },
+      {
+        "label": "404 Media: Inside ICE’s Tool to Monitor Phones in Entire Neighborhoods (Jan. 2026)",
+        "url": "https://www.404media.co/inside-ices-tool-to-monitor-phones-in-entire-neighborhoods/"
+      },
+      {
+        "label": "404 Media: Inside the U.S. Government-Bought Tool That Can Track Phones at Abortion Clinics (Oct. 2024; discussing Babel’s Locate X)",
+        "url": "https://www.404media.co/inside-the-u-s-government-bought-tool-that-can-track-phones-at-abortion-clinics/"
+      },
+      {
+        "label": "EPIC: DHS Disregards Internal Policies and Avoids Fourth Amendment Protections to Track Your Location (Feb. 2024)",
+        "url": "https://epic.org/dhs-disregards-internal-policies-and-avoids-fourth-amendment-protections-to-track-your-location/"
+      },
+      {
+        "label": "FedScoop: ICE Says It’s Stopped Using Commercial Telemetry Data (Jan. 2024)",
+        "url": "https://fedscoop.com/ice-says-its-stopped-using-phone-location-data/"
+      },
+      {
+        "label": "DHS Office of Inspector General (OIG): CBP, ICE, and Secret Service Did Not Adhere to Privacy Policies or Develop Sufficient Policies Before Procuring and Using Commercial Telemetry Data (Sep. 2023)",
+        "url": "https://www.oig.dhs.gov/sites/default/files/assets/2023-09/OIG-23-61-Sep23-Redacted.pdf"
+      },
+      {
+        "label": "DHS OIG: Secret Service and ICE Did Not Always Adhere to Statute and Policies Governing Use of Cell-Site Simulators (Feb. 2023)",
+        "url": "https://www.oig.dhs.gov/sites/default/files/assets/2023-03/OIG-23-17-Feb23-Redacted.pdf"
+      },
+      {
+        "label": "EPIC: DHS's Data Reservoir: ICE and CBP's Capture and Circulation of Location Information (Aug. 2022)",
+        "url": "https://epic.org/wp-content/uploads/2022/08/DHS-Data-Reservoir-Report-Aug2022.pdf"
+      },
+      {
+        "label": "ACLU: New Records Detail DHS Purchase and Use of Vast Quantities of Cell Phone Location Data (Jul. 2022)",
+        "url": "https://www.aclu.org/news/privacy-technology/new-records-detail-dhs-purchase-and-use-of-vast-quantities-of-cell-phone-location-data"
+      },
+      {
+        "label": "Wall Street Journal: Federal Agencies Use Cellphone Location Data for Immigration Enforcement (Feb. 2020)",
+        "url": "https://www.wsj.com/articles/federal-agencies-use-cellphone-location-data-for-immigration-enforcement-11581078600"
+      },
+      {
+        "label": "EFF: Gotta Catch 'Em All: Understanding How IMSI-Catchers Exploit Cell Networks (Jun. 2019)",
+        "url": "https://www.eff.org/wp/gotta-catch-em-all-understanding-how-imsi-catchers-exploit-cell-networks"
+      }
+    ],
+    "actionLinks": [
+      {
+        "label": "CBP PIA: Commercial Telemetry Data Evaluation (Aug. 2024)",
+        "url": "https://www.dhs.gov/sites/default/files/2024-08/24_0812_priv_pia-cbp-080-commercial-telemetry.pdf"
+      },
+      {
+        "label": "HSI Policy Memo: Use of Cell-Site Simulator Technology (Sep. 2023)",
+        "url": "https://www.ice.gov/doclib/foia/policy/memo_UseCellSiteSimulatorTech_09.01.2023.pdf"
+      },
+      {
+        "label": "ICE PIA: Homeland Security Investigation (HSI) Surveillance Technologies (Jan. 2022)",
+        "url": "https://www.dhs.gov/sites/default/files/2022-01/privacy-pia-ice061-hsisuveillancetech-january2022_0.pdf"
+      },
+      {
+        "label": "ICE Legal Analysis: Draft Legal Document Discussing ICE's Use of Geolocation Data (2021)",
+        "url": "https://www.aclu.org/cases/aclu-v-department-homeland-security-commercial-location-data-foia?document=Draft-Legal-Document-Discussing-ICEs-Use-of-Geolocation-Data"
+      },
+      {
+        "label": "DHS Policy Directive 047-02: Department Policy Regarding the Use of Cell-Site Simulator Technology (Oct. 2015)",
+        "url": "https://www.dhs.gov/sites/default/files/publications/mgmt/law-enforcement/mgmt-dir_047-02-dept-policy-regarding-use-cell-site-simulator-technology.pdf"
+      },
+      {
+        "label": "I&A Policy Instruction IA-1002: Safeguarding Personal Information Collected from Signals Intelligence Activities (Jan. 2015)",
+        "url": "https://www.dhs.gov/sites/default/files/publications/i%26a-ppd-28.pdf"
+      }
+    ]
+  },
+  {
+    "entity": "License plate readers (LPR) and LPR data",
+    "description": "Mounted at fixed location or installed on vehicles, LPRs record the license plate and location of vehicles that pass by, enabling DHS to determine the precise location of vehicles over time. DHS both operates its own LPRs and obtains data from commercial or other government-operated LPR systems. Agents can use this to track criminal suspects, immigrants, or protestors.",
+    "totalOverall": 1500000,
+    "companies": [
+      {
+        "name": "Thomson Reuters",
+        "agencies": [
+          "ICE"
+        ],
+        "overall": null,
+        "yearly": {
+          "2021": 579000
+        }
+      },
+      {
+        "name": "Thundercat Technology",
+        "agencies": [
+          "CBP"
+        ],
+        "overall": null,
+        "yearly": {
+          "2021": 425000
+        }
+      },
+      {
+        "name": "Widepoint Integrated Solutions",
+        "agencies": [
+          "CBP"
+        ],
+        "overall": 253000,
+        "yearly": {
+          "2025": 209000,
+          "2024": 462000
+        }
+      },
+      {
+        "name": "Vetted Security Solutions",
+        "agencies": [
+          "ICE",
+          "CBP"
+        ],
+        "overall": 99000,
+        "yearly": {
+          "2025": 25000,
+          "2024": 40000,
+          "2023": 34000
+        }
+      },
+      {
+        "name": "Motorola",
+        "agencies": [
+          "ICE"
+        ],
+        "overall": null,
+        "yearly": {
+          "2025": 95000
+        }
+      }
+    ],
+    "sourceLinks": [
+      {
+        "label": "AP: Border Patrol Is Monitoring U.S. Drivers and Detaining Those with ‘Suspicious’ Travel Patterns (Nov. 2025)",
+        "url": "https://apnews.com/article/immigration-border-patrol-surveillance-drivers-ice-trump-9f5d05469ce8c629d6fecf32d32098cd"
+      },
+      {
+        "label": "University of Washington: Leaving the Door Wide Open: Flock Surveillance Systems Expose Washington Data to Immigration Enforcement (Oct. 2025)",
+        "url": "https://jsis.washington.edu/humanrights/2025/10/21/leaving-the-door-wide-open/"
+      },
+      {
+        "label": "Brennan Center: Automatic License Plate Readers: Legal Status and Policy Recommendations for Law Enforcement Use (Sep. 2020)",
+        "url": "https://www.brennancenter.org/our-work/research-reports/automatic-license-plate-readers-legal-status-and-policy-recommendations"
+      }
+    ],
+    "actionLinks": [
+      {
+        "label": "DHS AI Use Case Inventory: USSS License Plate Reader (DHS-2626); ICE License Plate Capture and Analysis (DHS-2666) (Jan. 2026)",
+        "url": "https://www.dhs.gov/ai/use-case-inventory/usss"
+      },
+      {
+        "label": "DHS AI Use Case Inventory: USSS License Plate Reader (DHS-2626); ICE License Plate Capture and Analysis (DHS-2666) (Jan. 2026)",
+        "url": "https://www.dhs.gov/ai/use-case-inventory/ice"
+      },
+      {
+        "label": "ICE PIA: Homeland Security Investigation (HSI) Surveillance Technologies (Jan. 2022)",
+        "url": "https://www.dhs.gov/sites/default/files/2022-01/privacy-pia-ice061-hsisuveillancetech-january2022_0.pdf"
+      },
+      {
+        "label": "ICE PIA: Acquisition and Use of License Plate Reader Data from a Commercial Service (May 2021)",
+        "url": "https://www.dhs.gov/publication/dhs-ice-pia-039-acquisition-and-use-license-plate-reader-data-commercial-service"
+      },
+      {
+        "label": "CBP PIA: License Plate Reader Technology (Jul. 2020)",
+        "url": "https://www.dhs.gov/publication/dhscbppia-049-cbp-license-plate-reader-technology"
+      }
+    ]
+  },
+  {
+    "entity": "Other vehicle tracking",
+    "description": "By attaching GPS monitors or using digital forensics to extract information from on-board computers, DHS can access detailed information about where cars have been.",
+    "totalOverall": 1300000,
+    "companies": [
+      {
+        "name": "Berla",
+        "agencies": [
+          "CBP"
+        ],
+        "overall": 1000000,
+        "yearly": {
+          "2025": 210000,
+          "2024": 148000,
+          "2023": 258000,
+          "2022": 425000
+        }
+      },
+      {
+        "name": "Starchase",
+        "agencies": [
+          "CBP"
+        ],
+        "overall": null,
+        "yearly": {
+          "2022": 250000
+        }
+      }
+    ],
+    "sourceLinks": [
+      {
+        "label": "The Intercept: Your Car Is Spying On You, and a CBP Contract Shows the Risks (May 2021)",
+        "url": "https://theintercept.com/2021/05/03/car-surveillance-berla-msab-cbp/"
+      },
+      {
+        "label": "DHS S&T Fact Sheet: Project iVe—Vehicle Navigation/Infotainment System Forensics for Law Enforcement (Apr. 2017)",
+        "url": "https://www.dhs.gov/sites/default/files/publications/508_FactSheet_CSD_Cybersecurity%20Forensics_Berla%20iVe_Final_April%202016.pdf"
+      }
+    ],
+    "actionLinks": []
+  }
+]

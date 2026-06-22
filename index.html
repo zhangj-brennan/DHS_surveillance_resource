@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Entity Company Table</title>
+
+<style>
+ @font-face {
+  font-family: "Benton";
+  src: url("Benton Sans/Benton Sans Book.otf");
+}
+
+@font-face {
+  font-family: "BentonStrong";
+  src: url("Benton Sans/Benton Sans Bold.otf");
+}
+
+body {
+  font-family: "Benton", Helvetica, Arial, sans-serif;
+  margin: 32px;
+  color: #000;
+  background: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border-top: 3px solid #000;
+}
+
+th,
+td {
+  border-top: 1px solid #ccc;
+  padding: 16px;
+  vertical-align: top;
+  text-align: left;
+}
+
+th {
+  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-top: none;
+}
+
+.entity-cell {
+  width: 15%;
+}
+
+.company-cell {
+  width: 20%;
+}
+
+.links-cell {
+  width: 18%;
+}
+
+.entity-name {
+  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.description {
+  font-family: "Benton", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #000;
+}
+
+.company {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.company:last-child {
+  margin-bottom: 0;
+}
+
+.company-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.company-name {
+  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+  font-size:12px;
+}
+
+.overall-value {
+  font-family: "Benton", Helvetica, Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+    font-size:12px;
+
+}
+
+.company-detail {
+  margin-top: 4px;
+}
+
+.single-year-value {
+  font-size: 12px;
+  color: #000;
+  font-variant-numeric: tabular-nums;
+}
+
+.sparkline {
+  width: 120px;
+  height: 42px;
+  overflow: visible;
+}
+
+.no-sparkline {
+  display: none;
+}
+
+.link-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size:11px;
+}
+
+a {
+  color: #007194;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 800px) {
+  table,
+  thead,
+  tbody,
+  tr,
+  th,
+  td {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    border-top: 3px solid #000;
+    padding: 12px 0;
+  }
+
+  td {
+    border-top: none;
+    padding: 10px 0;
+  }
+
+  td::before {
+    content: attr(data-label);
+    display: block;
+    font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .company {
+    grid-template-columns: 1fr auto;
+  }
+
+  .sparkline,
+  .no-sparkline {
+    grid-column: 1 / -1;
+    width: 150px;
+  }
+}
+.source-links a {
+  color: #007194;
+}
+
+.source-links a:hover {
+  color: #00415B;
+}
+
+.action-links a {
+  color: #9E0B0F;
+}
+
+.action-links a:hover {
+  color: #ED1C24;
+}
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.tab-btn {
+  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+  border: 1px solid #000;;
+  background: #fff;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background: #000;;
+  color: #fff;
+}
+.company-name-wrap {
+  min-width: 0;
+}
+
+.agency-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 3px;
+}
+
+.agency-tag {
+  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: #555;
+  border: 1px solid #aaa;
+  padding: 3px 4px 2px;
+  text-transform: uppercase;
+}
+</style>
+</head>
+
+<body>
+
+<h1>DHS interior surveilance resource TEST DO NOT SHARE THIS DRAFT</h1>
+<div class="tabs" id="tabs"></div>
+
+<table>
+  <thead>
+    <tr>
+      <th class="entity-cell">Type</th>
+      <th class="company-cell">Expenditures and Contractors (since 1/20/21)</th>
+      <th class="source-links-cell">Further Information on Capabilities, Uses, and Abuses </th>
+      <th class="action-links-cell">DHS Policies and Other DHS Resources</th>
+    </tr>
+  </thead>
+  <tbody id="table-body"></tbody>
+</table>
+
+<script>
+
+
+function makeSparkline(yearly) {
+  const entries = Object.entries(yearly)
+    .map(([year, value]) => ({
+      year: +year,
+      value: +value
+    }))
+    .sort((a, b) => a.year - b.year);
+
+  const width = 120;
+  const height = 42;
+
+  const leftPad = 12;
+  const rightPad = 12;
+  const topPad = 3;
+  const bottomPad = 16;
+
+  const plotWidth = width - leftPad - rightPad;
+  const plotHeight = height - topPad - bottomPad;
+
+  const minYear = entries[0].year;
+  const maxYear = entries[entries.length - 1].year;
+
+  const minValue = Math.min(...entries.map(d => d.value));
+  const maxValue = Math.max(...entries.map(d => d.value));
+
+  const yearRange = maxYear - minYear || 1;
+  const valueRange = maxValue - minValue || 1;
+
+  const xScale = year =>
+    leftPad + ((year - minYear) / yearRange) * plotWidth;
+
+  const yScale = value =>
+    topPad + plotHeight - ((value - minValue) / valueRange) * plotHeight;
+
+  const points = entries
+    .map(d => `${xScale(d.year)},${yScale(d.value)}`)
+    .join(" ");
+
+  const hoverDots = entries.map(d => `
+    <g>
+      <circle
+        class="spark-hit"
+        cx="${xScale(d.year)}"
+        cy="${yScale(d.value)}"
+        r="2"
+      >
+        <title>${d.year}: ${d.value}</title>
+      </circle>
+
+      <circle
+        class="spark-dot"
+        cx="${xScale(d.year)}"
+        cy="${yScale(d.value)}"
+        r="2.8"
+      ></circle>
+    </g>
+  `).join("");
+
+  const axisY = height - bottomPad + 5;
+
+  return `
+    <svg class="sparkline" viewBox="0 0 ${width} ${height}" aria-label="Yearly values">
+      <polyline
+        points="${points}"
+        fill="none"
+        stroke="black"
+        stroke-width="2"
+      />
+
+      ${hoverDots}
+
+      <line
+        x1="${leftPad}"
+        y1="${axisY}"
+        x2="${width - rightPad}"
+        y2="${axisY}"
+        stroke="#aaa"
+        stroke-width="1"
+      />
+
+      <text
+        x="${leftPad}"
+        y="${height - 1}"
+        font-size="9"
+        text-anchor="start"
+      >${minYear}</text>
+
+      <text
+        x="${width - rightPad}"
+        y="${height - 1}"
+        font-size="9"
+        text-anchor="end"
+      >${maxYear}</text>
+    </svg>
+  `;
+}
+function formatMoney(value) {
+  if (value === null || value === undefined || value === "") return "";
+
+  const number = Number(value);
+
+  if (Number.isNaN(number)) return value;
+
+  return "$" + number.toLocaleString();
+}
+
+function renderAgencies(company) {
+  const agencies = company.agencies || company.agency || [];
+
+  if (!agencies.length) return "";
+
+  return `
+    <div class="agency-list">
+      ${agencies.map(agency => `
+        <span class="agency-tag">${agency}</span>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderCompanies(companies) {
+  return companies.map(company => {
+    const yearlyEntries = company.yearly
+      ? Object.entries(company.yearly)
+          .map(([year, value]) => ({
+            year: +year,
+            value: +value
+          }))
+          .sort((a, b) => a.year - b.year)
+      : [];
+
+    let detail = "";
+
+    if (yearlyEntries.length > 1) {
+      detail = makeSparkline(company.yearly);
+    } else if (yearlyEntries.length === 1) {
+      detail = `
+        <div class="single-year-value">
+          ${yearlyEntries[0].year}: ${formatMoney(yearlyEntries[0].value)}
+        </div>
+      `;
+    }
+
+    return `
+      <div class="company">
+        <div class="company-topline">
+          <div class="company-name-wrap">
+            <div class="company-name">${company.name}</div>
+            ${renderAgencies(company)}
+          </div>
+
+          <div class="overall-value">${formatMoney(company.overall)}</div>
+        </div>
+
+        <div class="company-detail">
+          ${detail}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+function renderLinks(links, className) {
+  return `
+    <div class="link-list ${className}">
+      ${links.map(link => `
+        <a
+          href="${link.url}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ${link.label}
+        </a>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderTable(data) {
+  const tbody = document.getElementById("table-body");
+
+  tbody.innerHTML = data.map(row => `
+    <tr>
+      <td data-label="Entity">
+        <div class="entity-name">${row.entity}</div>
+        <div class="description">${row.description}</div>
+      </td>
+
+      <td data-label="Companies">
+        ${renderCompanies(row.companies)}
+      </td>
+
+      <td data-label="Source Links">
+        ${renderLinks(row.sourceLinks, "source-links")}
+      </td>
+
+      <td data-label="Action Links">
+${renderLinks(row.actionLinks, "action-links")}
+      </td>
+    </tr>
+  `).join("");
+}
+filesNames = [
+"Type of Video Surveillance",
+"Type of Biometric Collection or Technology",
+"Type of Data Analysis Tool",
+"Type of Data Purchase",
+"Type of Location Tracking",
+"Type of Phone Access Tools"]
+
+
+const tabs = [
+  {
+    label: "Video Surveillance",
+    file: "Type of Video Surveillance.json"
+  },
+  {
+    label: "Biometric Collection, Storage, and Identification",
+    file: "Type of Biometric Collection or Technology.json"
+  },
+  {
+    label: "Real-time/Detailed Location Tracking",
+    file: "Type of Location Tracking.json"
+  },
+  {
+    label: "Tools to Access Phone Content",
+    file: "Type of Phone Access Tools.json"
+  },
+  {
+    label: "Data Purchases",
+    file: "Type of Data Purchase.json"
+  },
+  {
+    label: "Data Analysis Tools",
+    file: "Type of Data Analysis Tool.json"
+  }
+];
+
+let activeTabIndex = 0;
+
+function renderTabs() {
+  const tabsEl = document.getElementById("tabs");
+
+  tabsEl.innerHTML = tabs.map((tab, i) => `
+    <button
+      class="tab-btn ${i === activeTabIndex ? "active" : ""}"
+      type="button"
+      onclick="loadTab(${i})"
+    >
+      ${tab.label}
+    </button>
+  `).join("");
+}
+
+function loadTab(index) {
+  activeTabIndex = index;
+  renderTabs();
+
+  fetch(tabs[index].file)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Could not load ${tabs[index].file}`);
+      }
+
+      return response.json();
+    })
+    .then(data => {
+      renderTable(data);
+    })
+    .catch(error => {
+      console.error(error);
+      document.getElementById("table-body").innerHTML = `
+        <tr>
+          <td colspan="4">
+            Could not load ${tabs[index].file}
+          </td>
+        </tr>
+      `;
+    });
+}
+
+renderTabs();
+loadTab(0);
+</script>
+
+</body>
+</html>
