@@ -62,10 +62,12 @@ th {
   display: inline-block;
   font-family: "BentonStrong", Helvetica, Arial, sans-serif;
   font-size: 10px;
-  line-height: 1.1;
+  line-height: 1;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color:red;
+  border: 1px solid #000;
+  padding: 4px 5px 3px;
+  margin-bottom: 8px;
 }
 
 .entity-name {
@@ -145,20 +147,6 @@ a {
 a:hover {
   text-decoration: underline;
 }
-.spark-tooltip {
-  position: fixed;
-  z-index: 9999;
-  display: none;
-  pointer-events: none;
-  background: #000;
-  color: #fff;
-  font-family: "Benton", Helvetica, Arial, sans-serif;
-  font-size: 11px;
-  line-height: 1.25;
-  padding: 6px 7px 5px;
-  border-radius: 2px;
-  white-space: nowrap;
-}
 
 @media (max-width: 800px) {
   table,
@@ -228,9 +216,8 @@ a:hover {
   font-family: "BentonStrong", Helvetica, Arial, sans-serif;
   border: 1px solid #000;;
   background: #fff;
-  padding: 4px 4px;
+  padding: 10px 14px;
   cursor: pointer;
-  font-size:12px;
 }
 
 .tab-btn.active {
@@ -240,9 +227,9 @@ a:hover {
 
 .tab-btn.disabled,
 .tab-btn:disabled {
-  color: #000;
+  color: #999;
   border-color: #ccc;
-  background: #fff;
+  background: #f3f3f3;
   cursor: not-allowed;
   opacity: 0.65;
 }
@@ -267,9 +254,9 @@ a:hover {
   font-size: 10px;
   line-height: 1;
   letter-spacing: 0.03em;
-  color: #fff;
-  background-color:#000;
-  padding: 4px 4px 2px;
+  color: #555;
+  border: 1px solid #aaa;
+  padding: 3px 4px 2px;
   text-transform: uppercase;
 }
 
@@ -316,7 +303,7 @@ a:hover {
 </style>
 </head>
 
-<body><div class="spark-tooltip" id="spark-tooltip"></div>
+<body>
 
 <h1>DHS interior surveilance resource TEST DO NOT SHARE THIS DRAFT</h1>
 <div class="tabs" id="tabs"></div>
@@ -383,26 +370,24 @@ function makeSparkline(yearly) {
     .join(" ");
 
   const hoverDots = entries.map(d => `
-  <g>
-    <circle
-      cx="${xScale(d.year)}"
-      cy="${yScale(d.value)}"
-      r="8"
-      fill="transparent"
-      onmousemove="showSparkTooltip(event, '${d.year}', '${formatMoney(d.value)}')"
-      onmouseleave="hideSparkTooltip()"
-    ></circle>
+    <g>
+      <circle
+        class="spark-hit"
+        cx="${xScale(d.year)}"
+        cy="${yScale(d.value)}"
+        r="2"
+      >
+        <title>${d.year}: ${d.value}</title>
+      </circle>
 
-    <circle
-      class="spark-dot"
-      cx="${xScale(d.year)}"
-      cy="${yScale(d.value)}"
-      r="2.8"
-      fill="black"
-      pointer-events="none"
-    ></circle>
-  </g>
-`).join("");
+      <circle
+        class="spark-dot"
+        cx="${xScale(d.year)}"
+        cy="${yScale(d.value)}"
+        r="2.8"
+      ></circle>
+    </g>
+  `).join("");
 
   const axisY = height - bottomPad + 5;
 
@@ -442,24 +427,6 @@ function makeSparkline(yearly) {
     </svg>
   `;
 }
-function showSparkTooltip(event, year, value) {
-  const tooltip = document.getElementById("spark-tooltip");
-
-  tooltip.innerHTML = `
-    <strong>${year}</strong><br>
-    ${value}
-  `;
-
-  tooltip.style.display = "block";
-  tooltip.style.left = `${event.clientX + 12}px`;
-  tooltip.style.top = `${event.clientY + 12}px`;
-}
-
-function hideSparkTooltip() {
-  const tooltip = document.getElementById("spark-tooltip");
-  tooltip.style.display = "none";
-}
-
 function formatMoney(value) {
   if (value === null || value === undefined || value === "") return "";
 
@@ -514,6 +481,8 @@ function renderCompanies(companies) {
             <div class="company-name">${company.name}</div>
             ${renderAgencies(company)}
           </div>
+
+          <div class="overall-value">${formatMoney(company.overall)}</div>
         </div>
 
         <div class="company-detail">
@@ -653,7 +622,6 @@ filesNames = [
 
 
 const tabs = [
-  
   {
     label: "Video Surveillance",
     file: "Type of Video Surveillance.json"
@@ -680,6 +648,7 @@ const tabs = [
   }
 ];
 
+let activeTabIndex = 0;
 let showingAllTabs = false;
 let currentData = [];
 let activeAgency = "";
@@ -798,9 +767,7 @@ function loadInitialData() {
     .then(tabData => {
       tabDataCache = tabData;
       allData = tabData.flat();
-
-      showingAllTabs = true;
-      currentData = allData;
+      currentData = getRowsForTab(activeTabIndex);
 
       updateAgencyFilterOptions(allData);
       renderTabs();

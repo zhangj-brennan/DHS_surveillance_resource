@@ -62,10 +62,12 @@ th {
   display: inline-block;
   font-family: "BentonStrong", Helvetica, Arial, sans-serif;
   font-size: 10px;
-  line-height: 1.1;
+  line-height: 1;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color:red;
+  border: 1px solid #000;
+  padding: 4px 5px 3px;
+  margin-bottom: 8px;
 }
 
 .entity-name {
@@ -145,20 +147,6 @@ a {
 a:hover {
   text-decoration: underline;
 }
-.spark-tooltip {
-  position: fixed;
-  z-index: 9999;
-  display: none;
-  pointer-events: none;
-  background: #000;
-  color: #fff;
-  font-family: "Benton", Helvetica, Arial, sans-serif;
-  font-size: 11px;
-  line-height: 1.25;
-  padding: 6px 7px 5px;
-  border-radius: 2px;
-  white-space: nowrap;
-}
 
 @media (max-width: 800px) {
   table,
@@ -228,28 +216,13 @@ a:hover {
   font-family: "BentonStrong", Helvetica, Arial, sans-serif;
   border: 1px solid #000;;
   background: #fff;
-  padding: 4px 4px;
+  padding: 10px 14px;
   cursor: pointer;
-  font-size:12px;
 }
 
 .tab-btn.active {
   background: #000;;
   color: #fff;
-}
-
-.tab-btn.disabled,
-.tab-btn:disabled {
-  color: #000;
-  border-color: #ccc;
-  background: #fff;
-  cursor: not-allowed;
-  opacity: 0.65;
-}
-
-.tab-btn.disabled:hover,
-.tab-btn:disabled:hover {
-  text-decoration: none;
 }
 .company-name-wrap {
   min-width: 0;
@@ -267,9 +240,9 @@ a:hover {
   font-size: 10px;
   line-height: 1;
   letter-spacing: 0.03em;
-  color: #fff;
-  background-color:#000;
-  padding: 4px 4px 2px;
+  color: #555;
+  border: 1px solid #aaa;
+  padding: 3px 4px 2px;
   text-transform: uppercase;
 }
 
@@ -316,7 +289,7 @@ a:hover {
 </style>
 </head>
 
-<body><div class="spark-tooltip" id="spark-tooltip"></div>
+<body>
 
 <h1>DHS interior surveilance resource TEST DO NOT SHARE THIS DRAFT</h1>
 <div class="tabs" id="tabs"></div>
@@ -383,26 +356,24 @@ function makeSparkline(yearly) {
     .join(" ");
 
   const hoverDots = entries.map(d => `
-  <g>
-    <circle
-      cx="${xScale(d.year)}"
-      cy="${yScale(d.value)}"
-      r="8"
-      fill="transparent"
-      onmousemove="showSparkTooltip(event, '${d.year}', '${formatMoney(d.value)}')"
-      onmouseleave="hideSparkTooltip()"
-    ></circle>
+    <g>
+      <circle
+        class="spark-hit"
+        cx="${xScale(d.year)}"
+        cy="${yScale(d.value)}"
+        r="2"
+      >
+        <title>${d.year}: ${d.value}</title>
+      </circle>
 
-    <circle
-      class="spark-dot"
-      cx="${xScale(d.year)}"
-      cy="${yScale(d.value)}"
-      r="2.8"
-      fill="black"
-      pointer-events="none"
-    ></circle>
-  </g>
-`).join("");
+      <circle
+        class="spark-dot"
+        cx="${xScale(d.year)}"
+        cy="${yScale(d.value)}"
+        r="2.8"
+      ></circle>
+    </g>
+  `).join("");
 
   const axisY = height - bottomPad + 5;
 
@@ -442,24 +413,6 @@ function makeSparkline(yearly) {
     </svg>
   `;
 }
-function showSparkTooltip(event, year, value) {
-  const tooltip = document.getElementById("spark-tooltip");
-
-  tooltip.innerHTML = `
-    <strong>${year}</strong><br>
-    ${value}
-  `;
-
-  tooltip.style.display = "block";
-  tooltip.style.left = `${event.clientX + 12}px`;
-  tooltip.style.top = `${event.clientY + 12}px`;
-}
-
-function hideSparkTooltip() {
-  const tooltip = document.getElementById("spark-tooltip");
-  tooltip.style.display = "none";
-}
-
 function formatMoney(value) {
   if (value === null || value === undefined || value === "") return "";
 
@@ -514,6 +467,8 @@ function renderCompanies(companies) {
             <div class="company-name">${company.name}</div>
             ${renderAgencies(company)}
           </div>
+
+          <div class="overall-value">${formatMoney(company.overall)}</div>
         </div>
 
         <div class="company-detail">
@@ -593,6 +548,10 @@ function updateAgencyFilterOptions(data) {
   const select = document.getElementById("agency-filter");
   const agencies = getAgenciesFromData(data);
 
+  if (activeAgency && !agencies.includes(activeAgency)) {
+    activeAgency = "";
+  }
+
   select.innerHTML = `
     <option value="">All agencies</option>
     ${agencies.map(agency => `
@@ -616,6 +575,11 @@ function renderCurrentData() {
   } else {
     countEl.textContent = `${currentData.length} rows shown`;
   }
+}
+
+function setAgencyFilter(agency) {
+  activeAgency = agency;
+  renderCurrentData();
 }
 
 function renderTable(data) {
@@ -653,7 +617,6 @@ filesNames = [
 
 
 const tabs = [
-  
   {
     label: "Video Surveillance",
     file: "Type of Video Surveillance.json"
@@ -680,29 +643,10 @@ const tabs = [
   }
 ];
 
+let activeTabIndex = 0;
 let showingAllTabs = false;
 let currentData = [];
 let activeAgency = "";
-let tabDataCache = [];
-let allData = [];
-
-function getRowsForTab(index) {
-  return tabDataCache[index] || [];
-}
-
-function getVisibleDataForCurrentView() {
-  if (showingAllTabs) return allData;
-  return getRowsForTab(activeTabIndex);
-}
-
-function tabHasActiveAgency(index) {
-  if (!activeAgency) return true;
-  return getRowsForTab(index).some(row => rowMatchesAgency(row, activeAgency));
-}
-
-function getFirstEnabledTabIndex() {
-  return tabs.findIndex((tab, i) => tabHasActiveAgency(i));
-}
 
 function renderTabs() {
   const tabsEl = document.getElementById("tabs");
@@ -717,20 +661,15 @@ function renderTabs() {
     </button>
   `;
 
-  const tabButtons = tabs.map((tab, i) => {
-    const disabled = !tabHasActiveAgency(i);
-
-    return `
-      <button
-        class="tab-btn ${disabled ? "disabled" : ""} ${!showingAllTabs && i === activeTabIndex ? "active" : ""}"
-        type="button"
-        ${disabled ? "disabled aria-disabled='true'" : `onclick="loadTab(${i})"`}
-        title="${disabled ? `No ${activeAgency} entries in this tab` : ""}"
-      >
-        ${tab.label}
-      </button>
-    `;
-  }).join("");
+  const tabButtons = tabs.map((tab, i) => `
+    <button
+      class="tab-btn ${!showingAllTabs && i === activeTabIndex ? "active" : ""}"
+      type="button"
+      onclick="loadTab(${i})"
+    >
+      ${tab.label}
+    </button>
+  `).join("");
 
   tabsEl.innerHTML = allButton + tabButtons;
 }
@@ -743,45 +682,39 @@ function addSectionLabels(data, label) {
 }
 
 function loadTab(index) {
-  if (!tabHasActiveAgency(index)) return;
-
   activeTabIndex = index;
   showingAllTabs = false;
-  currentData = getRowsForTab(index);
   renderTabs();
-  renderCurrentData();
+
+  fetch(tabs[index].file)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Could not load ${tabs[index].file}`);
+      }
+
+      return response.json();
+    })
+    .then(data => {
+      currentData = addSectionLabels(data, tabs[index].label);
+      updateAgencyFilterOptions(currentData);
+      renderCurrentData();
+    })
+    .catch(error => {
+      console.error(error);
+      document.getElementById("table-body").innerHTML = `
+        <tr>
+          <td colspan="4">
+            Could not load ${tabs[index].file}
+          </td>
+        </tr>
+      `;
+    });
 }
 
 function loadAllTabs() {
   showingAllTabs = true;
-  currentData = allData;
   renderTabs();
-  renderCurrentData();
-}
 
-function setAgencyFilter(agency) {
-  activeAgency = agency;
-
-  if (!showingAllTabs && !tabHasActiveAgency(activeTabIndex)) {
-    const firstEnabledTabIndex = getFirstEnabledTabIndex();
-
-    if (firstEnabledTabIndex >= 0) {
-      activeTabIndex = firstEnabledTabIndex;
-      currentData = getRowsForTab(activeTabIndex);
-    } else {
-      showingAllTabs = true;
-      currentData = allData;
-    }
-  } else {
-    currentData = getVisibleDataForCurrentView();
-  }
-
-  updateAgencyFilterOptions(allData);
-  renderTabs();
-  renderCurrentData();
-}
-
-function loadInitialData() {
   const fetches = tabs.map(tab =>
     fetch(tab.file)
       .then(response => {
@@ -796,14 +729,8 @@ function loadInitialData() {
 
   Promise.all(fetches)
     .then(tabData => {
-      tabDataCache = tabData;
-      allData = tabData.flat();
-
-      showingAllTabs = true;
-      currentData = allData;
-
-      updateAgencyFilterOptions(allData);
-      renderTabs();
+      currentData = tabData.flat();
+      updateAgencyFilterOptions(currentData);
       renderCurrentData();
     })
     .catch(error => {
@@ -811,14 +738,15 @@ function loadInitialData() {
       document.getElementById("table-body").innerHTML = `
         <tr>
           <td colspan="4">
-            Could not load table data
+            Could not load all tab data
           </td>
         </tr>
       `;
     });
 }
 
-loadInitialData();
+renderTabs();
+loadTab(0);
 </script>
 
 </body>
