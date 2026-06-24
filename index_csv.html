@@ -49,7 +49,17 @@ th {
 .entity-cell {
   width: 15%;
 }
+.company-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 24px;
+}
 
+@media (max-width: 800px) {
+  .company-grid {
+    grid-template-columns: 1fr;
+  }
+}
 .company-cell {
   width: 20%;
 }
@@ -138,7 +148,7 @@ th {
 }
 
 a {
-  color: #007194;
+  color: #000;
   text-decoration: none;
 }
 
@@ -241,7 +251,8 @@ a:hover {
 .tab-btn.disabled,
 .tab-btn:disabled {
   color: #000;
-  border-color: #ccc;
+  color: #B0B0B0;
+  border:1px solid #B0B0B0;
   background: #fff;
   cursor: not-allowed;
   opacity: 0.65;
@@ -293,13 +304,13 @@ a:hover {
   font-size: 13px;
   border: 1px solid #000;
   background: #fff;
-  padding: 8px 10px;
+  padding: 2px 6px;
   min-width: 180px;
 }
 
 .filter-count {
   font-size: 12px;
-  color: #555;
+  color: #DBDADA;
 }
 
 @media (max-width: 800px) {
@@ -319,10 +330,11 @@ a:hover {
 <body><div class="spark-tooltip" id="spark-tooltip"></div>
 
 <h1>DHS interior surveilance resource TEST DO NOT SHARE THIS DRAFT</h1>
+  <label class="filter-label" for="agency-filter">types:</label>
 <div class="tabs" id="tabs"></div>
 
 <div class="filter-bar" id="filter-bar">
-  <label class="filter-label" for="agency-filter">Agency filter</label>
+  <label class="filter-label" for="agency-filter">Agency filter:</label>
   <select class="agency-select" id="agency-filter" onchange="setAgencyFilter(this.value)">
     <option value="">All agencies</option>
   </select>
@@ -485,43 +497,47 @@ function renderAgencies(company) {
 }
 
 function renderCompanies(companies) {
-  return companies.map(company => {
-    const yearlyEntries = company.yearly
-      ? Object.entries(company.yearly)
-          .map(([year, value]) => ({
-            year: +year,
-            value: +value
-          }))
-          .sort((a, b) => a.year - b.year)
-      : [];
+  return `
+    <div class="company-grid">
+      ${companies.map(company => {
+        const yearlyEntries = company.yearly
+          ? Object.entries(company.yearly)
+              .map(([year, value]) => ({
+                year: +year,
+                value: +value
+              }))
+              .sort((a, b) => a.year - b.year)
+          : [];
 
-    let detail = "";
+        let detail = "";
 
-    if (yearlyEntries.length > 1) {
-      detail = makeSparkline(company.yearly);
-    } else if (yearlyEntries.length === 1) {
-      detail = `
-        <div class="single-year-value">
-          ${yearlyEntries[0].year}: ${formatMoney(yearlyEntries[0].value)}
-        </div>
-      `;
-    }
+        if (yearlyEntries.length > 1) {
+          detail = makeSparkline(company.yearly);
+        } else if (yearlyEntries.length === 1) {
+          detail = `
+            <div class="single-year-value">
+              ${yearlyEntries[0].year}: ${formatMoney(yearlyEntries[0].value)}
+            </div>
+          `;
+        }
 
-    return `
-      <div class="company">
-        <div class="company-topline">
-          <div class="company-name-wrap">
-            <div class="company-name">${company.name}</div>
-            ${renderAgencies(company)}
+        return `
+          <div class="company">
+            <div class="company-topline">
+              <div class="company-name-wrap">
+                <div class="company-name">${company.name}</div>
+                ${renderAgencies(company)}
+              </div>
+            </div>
+
+            <div class="company-detail">
+              ${detail}
+            </div>
           </div>
-        </div>
-
-        <div class="company-detail">
-          ${detail}
-        </div>
-      </div>
-    `;
-  }).join("");
+        `;
+      }).join("")}
+    </div>
+  `;
 }
 function renderLinks(links, className) {
   return `
@@ -611,11 +627,7 @@ function renderCurrentData() {
   renderTable(filteredData);
 
   const countEl = document.getElementById("filter-count");
-  if (activeAgency) {
-    countEl.textContent = `${filteredData.length} of ${currentData.length} rows shown`;
-  } else {
-    countEl.textContent = `${currentData.length} rows shown`;
-  }
+
 }
 
 function renderTable(data) {
@@ -643,48 +655,273 @@ ${renderLinks(row.actionLinks, "action-links")}
     </tr>
   `).join("");
 }
-filesNames = [
-"Type of Video Surveillance",
-"Type of Biometric Collection or Technology",
-"Type of Data Analysis Tool",
-"Type of Data Purchase",
-"Type of Location Tracking",
-"Type of Phone Access Tools"]
-
+const DATA_FILES = {
+  descriptions: "descriptions.csv",
+  companies: "companies.csv",
+  references: "references.csv"
+};
 
 const tabs = [
-  
   {
     label: "Video Surveillance",
-    file: "Type of Video Surveillance.json"
+    category: "Type of Video Surveillance"
   },
   {
     label: "Biometric Collection, Storage, and Identification",
-    file: "Type of Biometric Collection or Technology.json"
+    category: "Type of Biometric Collection or Technology"
   },
   {
     label: "Real-time/Detailed Location Tracking",
-    file: "Type of Location Tracking.json"
+    category: "Type of Location Tracking"
   },
   {
     label: "Tools to Access Phone Content",
-    file: "Type of Phone Access Tools.json"
+    category: "Type of Phone Access Tools"
   },
   {
     label: "Data Purchases",
-    file: "Type of Data Purchase.json"
+    category: "Type of Data Purchase"
   },
   {
     label: "Data Analysis Tools",
-    file: "Type of Data Analysis Tool.json"
+    category: "Type of Data Analysis Tool"
   }
 ];
 
 let showingAllTabs = false;
 let currentData = [];
 let activeAgency = "";
+let activeTabIndex = 0;
 let tabDataCache = [];
 let allData = [];
+
+const yearlyColumns = [
+  { column: "2026 Obligations", year: "2026" },
+  { column: "2025 Obligations", year: "2025" },
+  { column: "2024 Obligations", year: "2024" },
+  { column: "2023 Obligations", year: "2023" },
+  { column: "2022 Obligations", year: "2022" },
+  { column: "2021 Obligations (after Jan. 19)", year: "2021" }
+];
+
+function parseCSV(text) {
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const nextChar = text[i + 1];
+
+    if (char === '"' && inQuotes && nextChar === '"') {
+      cell += '"';
+      i++;
+    } else if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === "," && !inQuotes) {
+      row.push(cell);
+      cell = "";
+    } else if ((char === "\n" || char === "\r") && !inQuotes) {
+      if (char === "\r" && nextChar === "\n") i++;
+      row.push(cell);
+      if (row.some(value => value.trim() !== "")) rows.push(row);
+      row = [];
+      cell = "";
+    } else {
+      cell += char;
+    }
+  }
+
+  row.push(cell);
+  if (row.some(value => value.trim() !== "")) rows.push(row);
+
+  if (!rows.length) return [];
+
+  const headers = rows[0].map(header => header.trim());
+
+  return rows.slice(1).map(values => {
+    const obj = {};
+    headers.forEach((header, i) => {
+      obj[header] = values[i] !== undefined ? values[i].trim() : "";
+    });
+    return obj;
+  });
+}
+
+function fetchCSV(file) {
+  return fetch(file).then(response => {
+    if (!response.ok) {
+      throw new Error(`Could not load ${file}`);
+    }
+    return response.text();
+  }).then(parseCSV);
+}
+
+function normalizeText(value) {
+  return String(value || "").trim();
+}
+
+function normalizeHeaderName(value) {
+  return String(value || "")
+    .replace(/^\uFEFF/, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "")
+    .trim();
+}
+
+function getCSVValue(row, possibleHeaders) {
+  const normalizedLookup = {};
+
+  Object.keys(row || {}).forEach(key => {
+    normalizedLookup[normalizeHeaderName(key)] = row[key];
+  });
+
+  for (const header of possibleHeaders) {
+    const value = normalizedLookup[normalizeHeaderName(header)];
+    if (value !== undefined) return value;
+  }
+
+  return "";
+}
+
+function makeRowKey(category, surveillanceType) {
+  return `${normalizeText(category)}|||${normalizeText(surveillanceType)}`;
+}
+
+function parseMoneyToNumber(value) {
+  const cleaned = String(value || "")
+    .replace(/[$,]/g, "")
+    .trim();
+
+  if (!cleaned) return null;
+
+  const number = Number(cleaned);
+  return Number.isNaN(number) ? null : number;
+}
+
+function splitCompanyNameAndAgencies(name) {
+  const cleanName = normalizeText(name);
+  const match = cleanName.match(/^(.*?)\s*\(([^()]*)\)\s*$/);
+
+  if (!match) {
+    return {
+      name: cleanName,
+      agencies: []
+    };
+  }
+
+  return {
+    name: match[1].trim(),
+    agencies: match[2].split(",").map(d => d.trim()).filter(Boolean)
+  };
+}
+
+function getReferenceColumn(linkType) {
+  const type = normalizeText(linkType).toLowerCase();
+
+  if (
+    type.includes("policy") ||
+    type.includes("policies") ||
+    type.includes("dhs") ||
+    type.includes("resource") ||
+    type.includes("action")
+  ) {
+    return "actionLinks";
+  }
+
+  return "sourceLinks";
+}
+
+function makeLinkLabel(url) {
+  try {
+    const parsed = new URL(url);
+    return parsed.hostname.replace(/^www\./, "");
+  } catch (error) {
+    return url;
+  }
+}
+
+function buildRowsFromCSVs(descriptions, companies, references) {
+  const rowsByKey = new Map();
+
+  function ensureRow(category, surveillanceType) {
+    const cleanCategory = normalizeText(category);
+    const cleanSurveillanceType = normalizeText(surveillanceType);
+    const key = makeRowKey(cleanCategory, cleanSurveillanceType);
+
+    if (!rowsByKey.has(key)) {
+      const tab = tabs.find(item => item.category === cleanCategory);
+
+      rowsByKey.set(key, {
+        category: cleanCategory,
+        sectionLabel: tab ? tab.label : cleanCategory,
+        entity: cleanSurveillanceType,
+        description: "",
+        companies: [],
+        sourceLinks: [],
+        actionLinks: []
+      });
+    }
+
+    return rowsByKey.get(key);
+  }
+
+  descriptions.forEach(item => {
+    const category = item["Category"];
+    const surveillanceType = item["Surveillance Type"];
+    if (!normalizeText(category) || !normalizeText(surveillanceType)) return;
+
+    const row = ensureRow(category, surveillanceType);
+    row.description = normalizeText(item["Description"]);
+  });
+
+  companies.forEach(item => {
+    const category = getCSVValue(item, ["Category"]);
+    const surveillanceType = getCSVValue(item, ["Surveillance Type", "Survaillence Type", "SurveillanceType"]);
+    const contractorName = getCSVValue(item, ["Contractor Name", "Contractor", "Company", "Company Name"]);
+    const componentFunding = getCSVValue(item, ["DHS Component - Funding", "component-funding", "Component Funding", "Component", "Agency", "Agencies"]);
+    if (!normalizeText(category) || !normalizeText(surveillanceType)) return;
+
+    if (!normalizeText(contractorName) || normalizeText(contractorName).toLowerCase() === "undefined") return;
+
+    const row = ensureRow(category, surveillanceType);
+    const agencies = normalizeText(componentFunding)
+      .split(",")
+      .map(d => d.trim())
+      .filter(Boolean);
+    const yearly = {};
+
+    yearlyColumns.forEach(({ column, year }) => {
+      const value = parseMoneyToNumber(getCSVValue(item, [column]));
+      if (value !== null) yearly[year] = value;
+    });
+
+    row.companies.push({
+      name: normalizeText(contractorName),
+      agencies,
+      yearly
+    });
+  });
+
+  references.forEach(item => {
+    const category = item["Category"];
+    const surveillanceType = item["Surveillance Type"];
+    const url = normalizeText(item["url"] || item["URL"]);
+    if (!normalizeText(category) || !normalizeText(surveillanceType) || !url) return;
+
+    const row = ensureRow(category, surveillanceType);
+    const column = getReferenceColumn(item["link type"] || item["Linktype"] || item["Link Type"]);
+    const label = normalizeText(item["label"]) || makeLinkLabel(url);
+
+    row[column].push({
+      label,
+      url
+    });
+  });
+
+  return Array.from(rowsByKey.values());
+}
 
 function getRowsForTab(index) {
   return tabDataCache[index] || [];
@@ -735,13 +972,6 @@ function renderTabs() {
   tabsEl.innerHTML = allButton + tabButtons;
 }
 
-function addSectionLabels(data, label) {
-  return data.map(row => ({
-    ...row,
-    sectionLabel: label
-  }));
-}
-
 function loadTab(index) {
   if (!tabHasActiveAgency(index)) return;
 
@@ -782,23 +1012,19 @@ function setAgencyFilter(agency) {
 }
 
 function loadInitialData() {
-  const fetches = tabs.map(tab =>
-    fetch(tab.file)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Could not load ${tab.file}`);
-        }
+  Promise.all([
+    fetchCSV(DATA_FILES.descriptions),
+    fetchCSV(DATA_FILES.companies),
+    fetchCSV(DATA_FILES.references)
+  ])
+    .then(([descriptions, companies, references]) => {
+      const rows = buildRowsFromCSVs(descriptions, companies, references);
 
-        return response.json();
-      })
-      .then(data => addSectionLabels(data, tab.label))
-  );
+      tabDataCache = tabs.map(tab =>
+        rows.filter(row => row.category === tab.category)
+      );
 
-  Promise.all(fetches)
-    .then(tabData => {
-      tabDataCache = tabData;
-      allData = tabData.flat();
-
+      allData = tabDataCache.flat();
       showingAllTabs = true;
       currentData = allData;
 
