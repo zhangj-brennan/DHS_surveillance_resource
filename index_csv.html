@@ -381,6 +381,13 @@ h1{
   line-height: 1.2;
   color: #000;
 }
+.company-section-total {
+  font-family: "Benton", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  color: #000;
+}
 </style>
 </head>
 <body><div class="spark-tooltip" id="spark-tooltip"></div>
@@ -633,9 +640,34 @@ function renderAgencies(company) {
     </div>
   `;
 }
-
 function renderCompanies(companies) {
+  const sectionTotal = companies.reduce((sum, company) => {
+  return sum + Object.values(company.yearly || {}).reduce((s, v) => s + Number(v || 0), 0);
+}, 0);
+
+const agencyCount = new Set(
+  companies.flatMap(company => company.agencies || [])
+).size;
+
+const companyCount = companies.length;
+
+const allYears = companies.flatMap(company =>
+  Object.keys(company.yearly || {}).map(Number)
+);
+
+const minYear = Math.min(...allYears);
+const maxYear = Math.max(...allYears);
+
+const summary =
+  `${companyCount} ${companyCount === 1 ? "company" : "companies"} • ` +
+  `${agencyCount} ${agencyCount === 1 ? "agency" : "agencies"} • ` +
+  `${minYear}–${maxYear} total: ${formatMoney(sectionTotal)}`;
+
   return `
+    <div class="company-section-total">
+  ${summary}
+</div>
+
     <div class="company-grid">
       ${companies.map(company => {
         const yearlyEntries = company.yearly
@@ -783,11 +815,11 @@ function renderTable(data) {
         ${renderCompanies(row.companies)}
       </td>
 
-      <td data-label="1st set Links">
+      <td data-label="Further Information on Capabilities, Uses, and Abuses">
         ${renderLinks(row.sourceLinks, "source-links")}
       </td>
 
-      <td data-label="2nd set of Links">
+      <td data-label="DHS Policies and Other DHS Resources">
 ${renderLinks(row.actionLinks, "action-links")}
       </td>
     </tr>
