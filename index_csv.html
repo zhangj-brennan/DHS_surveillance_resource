@@ -27,7 +27,6 @@ table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-  border-top: 3px solid #000;
 }
 
 th,
@@ -49,23 +48,19 @@ th {
 .entity-cell {
   width: 15%;
 }
-.company-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px 24px;
-}
 
-@media (max-width: 800px) {
-  .company-grid {
-    grid-template-columns: 1fr;
-  }
-}
 .company-cell {
   width: 20%;
 }
 
 .links-cell {
   width: 18%;
+}
+
+.company-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 24px;
 }
 
 .section-label {
@@ -75,7 +70,7 @@ th {
   line-height: 1.1;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color:red;
+  color: red;
 }
 
 .entity-name {
@@ -85,7 +80,6 @@ th {
 }
 
 .description {
-  font-family: "Benton", Helvetica, Arial, sans-serif;
   font-size: 15px;
   line-height: 1.4;
   color: #000;
@@ -109,15 +103,17 @@ th {
 
 .company-name {
   font-family: "BentonStrong", Helvetica, Arial, sans-serif;
-  font-size:12px;
+  font-size: 12px;
+}
+
+.company-name-wrap {
+  min-width: 0;
 }
 
 .overall-value {
-  font-family: "Benton", Helvetica, Arial, sans-serif;
+  font-size: 12px;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
-    font-size:12px;
-
 }
 
 .company-detail {
@@ -144,7 +140,7 @@ th {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-size:11px;
+  font-size: 11px;
 }
 
 a {
@@ -155,6 +151,7 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
 .spark-tooltip {
   position: fixed;
   z-index: 9999;
@@ -166,8 +163,148 @@ a:hover {
   font-size: 11px;
   line-height: 1.25;
   padding: 6px 7px 5px;
-  border-radius: 2px;
+  border-radius: 0;
   white-space: nowrap;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.tab-btn {
+  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+  border: 1px solid #000;
+  background: #fff;
+  padding: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.tab-btn.active {
+  background: #000;
+  color: #fff;
+}
+
+.tab-btn.disabled,
+.tab-btn:disabled {
+  color: #b0b0b0;
+  border: 1px solid #b0b0b0;
+  background: #fff;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.tab-btn.disabled:hover,
+.tab-btn:disabled:hover {
+  text-decoration: none;
+}
+
+.agency-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 3px;
+}
+
+.agency-tag {
+  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: #fff;
+  background-color: #000;
+  padding: 4px 4px 2px;
+  text-transform: uppercase;
+}
+
+/* controls */
+
+.controls-area {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0 0 24px;
+}
+
+.desktop-tabs-wrap {
+  display: block;
+}
+
+.mobile-filter-control {
+  display: none;
+}
+
+.filter-control {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filter-label {
+  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.table-select {
+  width: 320px;
+  max-width: 100%;
+  font-family: "Benton", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.3;
+  color: #000;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 0;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.mobile-tab-select {
+  display: none;
+}
+
+.filter-count {
+  font-size: 12px;
+  color: #dbdada;
+}
+
+/* mobile */
+
+@media (max-width: 900px) {
+  body {
+    margin: 18px;
+  }
+
+  .desktop-tabs-wrap {
+    display: none;
+  }
+
+  .mobile-filter-control {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .mobile-tab-select {
+    display: block;
+  }
+
+  .table-select {
+    width: 100%;
+  }
+
+ .company-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 16px;
+  }
 }
 
 @media (max-width: 800px) {
@@ -190,10 +327,13 @@ a:hover {
   }
 
   td {
-    border-top: none;
-    padding: 10px 0;
-  }
+  border-top: 1px solid #d9d9d9;
+  padding: 14px 0;
+}
 
+td:first-child {
+  border-top: none;
+}
   td::before {
     content: attr(data-label);
     display: block;
@@ -203,150 +343,81 @@ a:hover {
     margin-bottom: 6px;
   }
 
-  .company {
-    grid-template-columns: 1fr auto;
-  }
-
   .sparkline,
   .no-sparkline {
     grid-column: 1 / -1;
     width: 150px;
   }
 }
-/* .source-links a {
-  color: #007194;
+h1{
+  font-size:24px;
+    font-family: "BentonStrong", Helvetica, Arial, sans-serif;
 }
 
-.source-links a:hover {
-  color: #00415B;
-}
-
-.action-links a {
-  color: #9E0B0F;
-}
-
-.action-links a:hover {
-  color: #ED1C24;
-} */
-.tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
-}
-
-.tab-btn {
-  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
-  border: 1px solid #000;;
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   background: #fff;
-  padding: 4px 4px;
-  cursor: pointer;
-  font-size:12px;
+  padding: 12px 0 14px;
+  border-bottom: 1px solid #ccc;
 }
 
-.tab-btn.active {
-  background: #000;;
-  color: #fff;
+.sticky-header h1 {
+  margin-top: 0;
+  margin-bottom: 14px;
 }
 
-.tab-btn.disabled,
-.tab-btn:disabled {
-  color: #000;
-  color: #B0B0B0;
-  border:1px solid #B0B0B0;
-  background: #fff;
-  cursor: not-allowed;
-  opacity: 0.65;
+@media (max-width: 900px) {
+  .sticky-header h1 {
+    font-size: 22px;
+    line-height: 1.15;
+  }
 }
-
-.tab-btn.disabled:hover,
-.tab-btn:disabled:hover {
-  text-decoration: none;
-}
-.company-name-wrap {
-  min-width: 0;
-}
-
-.agency-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 3px;
-}
-
-.agency-tag {
-  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
-  font-size: 10px;
-  line-height: 1;
-  letter-spacing: 0.03em;
-  color: #fff;
-  background-color:#000;
-  padding: 4px 4px 2px;
-  text-transform: uppercase;
-}
-
-.filter-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: -8px 0 24px;
-  flex-wrap: wrap;
-}
-
-.filter-label {
-  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.agency-select {
+.spark-total {
+  margin-top: 2px;
   font-family: "Benton", Helvetica, Arial, sans-serif;
-  font-size: 13px;
-  border: 1px solid #000;
-  background: #fff;
-  padding: 2px 6px;
-  min-width: 180px;
-}
-
-.filter-count {
   font-size: 12px;
-  color: #DBDADA;
+  line-height: 1.2;
+  color: #000;
 }
-
-@media (max-width: 800px) {
-  .filter-bar {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .agency-select {
-    width: 100%;
-  }
-}
-
 </style>
 </head>
-
 <body><div class="spark-tooltip" id="spark-tooltip"></div>
+<div class="sticky-header">
 
-<h1>DHS interior surveilance resource TEST DO NOT SHARE THIS DRAFT</h1>
-  <label class="filter-label" for="agency-filter">types:</label>
-<div class="tabs" id="tabs"></div>
+<h1>DHS Interior Surveilance Resource</h1>
 
-<div class="filter-bar" id="filter-bar">
-  <label class="filter-label" for="agency-filter">Agency filter:</label>
-  <select class="agency-select" id="agency-filter" onchange="setAgencyFilter(this.value)">
-    <option value="">All agencies</option>
-  </select>
-  <div class="filter-count" id="filter-count"></div>
+<div class="controls-area">
+
+  <div class="desktop-tabs-wrap">
+    <label class="filter-label">Types:</label>
+    <div class="tabs" id="tabs"></div>
+  </div>
+
+  <div class="mobile-filter-control">
+    <label class="filter-label" for="mobile-tab-select">Types:</label>
+    <select class="table-select mobile-tab-select" id="mobile-tab-select" onchange="handleMobileTabChange(this.value)">
+      <option value="all">All</option>
+    </select>
+  </div>
+
+  <div class="filter-control">
+    <label class="filter-label" for="agency-filter">Agency filter:</label>
+    <select class="table-select agency-select" id="agency-filter" onchange="setAgencyFilter(this.value)">
+      <option value="">All agencies</option>
+    </select>
+    <div class="filter-count" id="filter-count"></div>
+  </div>
+
 </div>
-
+</div>
 <table>
   <thead>
     <tr>
       <th class="entity-cell">Type</th>
       <th class="company-cell">Expenditures and Contractors (since 1/20/21)</th>
-      <th class="source-links-cell">Further Information on Capabilities, Uses, and Abuses </th>
+      <th class="source-links-cell">Further Information on Capabilities, Uses, and Abuses</th>
       <th class="action-links-cell">DHS Policies and Other DHS Resources</th>
     </tr>
   </thead>
@@ -354,7 +425,6 @@ a:hover {
 </table>
 
 <script>
-
 
 function makeSparkline(yearly) {
   const entries = Object.entries(yearly)
@@ -364,10 +434,11 @@ function makeSparkline(yearly) {
     }))
     .sort((a, b) => a.year - b.year);
 
+
   const width = 120;
   const height = 42;
 
-  const leftPad = 12;
+  const leftPad = 40;
   const rightPad = 12;
   const topPad = 3;
   const bottomPad = 16;
@@ -378,8 +449,16 @@ function makeSparkline(yearly) {
   const minYear = entries[0].year;
   const maxYear = entries[entries.length - 1].year;
 
+
+    const totalValue = entries.reduce((sum, d) => sum + d.value, 0);
+    const totalLabel =
+  entries.length > 1
+    ? `${minYear}–${maxYear} Total: ${formatMoney(totalValue)}`
+    : `${minYear}: ${formatMoney(totalValue)}`;
+
   const minValue = Math.min(...entries.map(d => d.value));
   const maxValue = Math.max(...entries.map(d => d.value));
+  const axisLabel = formatCompactMoney(maxValue);
 
   const yearRange = maxYear - minYear || 1;
   const valueRange = maxValue - minValue || 1;
@@ -390,36 +469,66 @@ function makeSparkline(yearly) {
   const yScale = value =>
     topPad + plotHeight - ((value - minValue) / valueRange) * plotHeight;
 
+  const maxEntry = entries.reduce((best, d) =>
+    d.value > best.value ? d : best
+  , entries[0]);
+
+  const maxPointX = xScale(maxEntry.year);
+  const maxPointY = yScale(maxEntry.value);
+
+  const labelX = 2;
+  const connectorStartX = 30;
+  const connectorEndX = Math.max(connectorStartX, maxPointX - 5);
+
   const points = entries
     .map(d => `${xScale(d.year)},${yScale(d.value)}`)
     .join(" ");
 
   const hoverDots = entries.map(d => `
-  <g>
-    <circle
-      cx="${xScale(d.year)}"
-      cy="${yScale(d.value)}"
-      r="8"
-      fill="transparent"
-      onmousemove="showSparkTooltip(event, '${d.year}', '${formatMoney(d.value)}')"
-      onmouseleave="hideSparkTooltip()"
-    ></circle>
+    <g>
+      <circle
+        cx="${xScale(d.year)}"
+        cy="${yScale(d.value)}"
+        r="8"
+        fill="transparent"
+        onmousemove="showSparkTooltip(event, '${d.year}', '${formatMoney(d.value)}')"
+        onmouseleave="hideSparkTooltip()"
+      ></circle>
 
-    <circle
-      class="spark-dot"
-      cx="${xScale(d.year)}"
-      cy="${yScale(d.value)}"
-      r="2.8"
-      fill="black"
-      pointer-events="none"
-    ></circle>
-  </g>
-`).join("");
+      <circle
+        class="spark-dot"
+        cx="${xScale(d.year)}"
+        cy="${yScale(d.value)}"
+        r="2.8"
+        fill="black"
+        pointer-events="none"
+      ></circle>
+    </g>
+  `).join("");
 
   const axisY = height - bottomPad + 5;
 
   return `
     <svg class="sparkline" viewBox="0 0 ${width} ${height}" aria-label="Yearly values">
+      <text
+        x="${labelX}"
+        y="${maxPointY + 4}"
+        font-size="10"
+        font-family="BentonStrong"
+        text-anchor="start"
+        fill="#000"
+      >${axisLabel}</text>
+
+   <line
+      x1="${connectorStartX}"
+      y1="${maxPointY}"
+      x2="${connectorEndX}"
+      y2="${maxPointY}"
+      stroke="#000"
+      stroke-width=".5"
+      stroke-dasharray="2,2"
+    />
+
       <polyline
         points="${points}"
         fill="none"
@@ -431,10 +540,19 @@ function makeSparkline(yearly) {
 
       <line
         x1="${leftPad}"
+        y1="${topPad}"
+        x2="${leftPad}"
+        y2="${axisY}"
+        stroke="#000"
+        stroke-width="1"
+      />
+
+      <line
+        x1="${leftPad}"
         y1="${axisY}"
         x2="${width - rightPad}"
         y2="${axisY}"
-        stroke="#aaa"
+        stroke="#000"
         stroke-width="1"
       />
 
@@ -452,8 +570,28 @@ function makeSparkline(yearly) {
         text-anchor="end"
       >${maxYear}</text>
     </svg>
+    <div class="spark-total">
+  ${totalLabel}
+</div>
   `;
 }
+
+function formatCompactMoney(value) {
+  if (value >= 1000000000) {
+    return "$" + (value / 1e9).toFixed(1) + "B";
+  }
+
+  if (value >= 1000000) {
+    return "$" + (value / 1e6).toFixed(0) + "M";
+  }
+
+  if (value >= 1000) {
+    return "$" + (value / 1000).toFixed(0) + "K";
+  }
+
+  return "$" + value;
+}
+
 function showSparkTooltip(event, year, value) {
   const tooltip = document.getElementById("spark-tooltip");
 
@@ -645,11 +783,11 @@ function renderTable(data) {
         ${renderCompanies(row.companies)}
       </td>
 
-      <td data-label="Source Links">
+      <td data-label="1st set Links">
         ${renderLinks(row.sourceLinks, "source-links")}
       </td>
 
-      <td data-label="Action Links">
+      <td data-label="2nd set of Links">
 ${renderLinks(row.actionLinks, "action-links")}
       </td>
     </tr>
@@ -940,6 +1078,35 @@ function tabHasActiveAgency(index) {
 function getFirstEnabledTabIndex() {
   return tabs.findIndex((tab, i) => tabHasActiveAgency(i));
 }
+function renderMobileTabSelect() {
+  const select = document.getElementById("mobile-tab-select");
+  if (!select) return;
+
+  select.innerHTML = `
+    <option value="all" ${showingAllTabs ? "selected" : ""}>All</option>
+    ${tabs.map((tab, i) => {
+      const disabled = !tabHasActiveAgency(i);
+
+      return `
+        <option 
+          value="${i}" 
+          ${!showingAllTabs && i === activeTabIndex ? "selected" : ""}
+          ${disabled ? "disabled" : ""}
+        >
+          ${tab.label}
+        </option>
+      `;
+    }).join("")}
+  `;
+}
+
+function handleMobileTabChange(value) {
+  if (value === "all") {
+    loadAllTabs();
+  } else {
+    loadTab(Number(value));
+  }
+}
 
 function renderTabs() {
   const tabsEl = document.getElementById("tabs");
@@ -970,6 +1137,8 @@ function renderTabs() {
   }).join("");
 
   tabsEl.innerHTML = allButton + tabButtons;
+  renderMobileTabSelect();
+
 }
 
 function loadTab(index) {
