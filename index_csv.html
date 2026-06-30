@@ -404,6 +404,33 @@ h1{
   margin-bottom: 12px;
   color: #000;
 }
+.search-control {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.table-search {
+  width: 320px;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  font-family: "Benton", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+
+  border: 1px solid #000;
+  background: #fff;
+  padding: 6px 8px;
+}
+
+@media (max-width:900px) {
+  .table-search {
+    width: 100%;
+    font-size: 18px;
+    padding: 12px 14px;
+    min-height: 48px;
+  }
+}
 </style>
 </head>
 <body><div class="spark-tooltip" id="spark-tooltip"></div>
@@ -412,6 +439,16 @@ h1{
 <h1>DHS Interior Surveilance Resource</h1>
 
 <div class="controls-area">
+  <div class="search-control">
+  <label class="filter-label" for="search-box">Search</label>
+  <input
+    id="search-box"
+    class="table-search"
+    type="search"
+    placeholder="Search types, companies, agencies..."
+    oninput="setSearchFilter(this.value)"
+  />
+</div>
 
   <div class="desktop-tabs-wrap">
     <label class="filter-label">Types:</label>
@@ -448,6 +485,34 @@ h1{
 </table>
 
 <script>
+
+let searchFilter = "";
+
+function setSearchFilter(value) {
+  searchFilter = value.trim().toLowerCase();
+  renderCurrentData();
+  scrollTableToTop();
+}
+function highlightSearch(text) {
+  if (!searchFilter || !text) return text || "";
+
+  const escapedSearch = searchFilter.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const regex = new RegExp(`(${escapedSearch})`, "gi");
+
+  return String(text).replace(regex, `<mark class="search-highlight">$1</mark>`);
+}
+
+function scrollTableToTop() {
+  const table = document.querySelector("table");
+  if (!table) return;
+
+  const y = table.getBoundingClientRect().top + window.pageYOffset - 350;
+
+  window.scrollTo({
+    top: y,
+    behavior: "smooth"
+  });
+}
 
 function makeSparkline(yearly) {
   const entries = Object.entries(yearly)
@@ -642,7 +707,6 @@ function formatMoney(value) {
 
   return "$" + number.toLocaleString();
 }
-
 function renderAgencies(company) {
   const agencies = getCompanyAgencies(company);
 
@@ -651,7 +715,7 @@ function renderAgencies(company) {
   return `
     <div class="agency-list">
       ${agencies.map(agency => `
-        <span class="agency-tag">${agency}</span>
+        <span class="agency-tag">${highlightSearch(agency)}</span>
       `).join("")}
     </div>
   `;
@@ -711,7 +775,7 @@ const summary =
           <div class="company">
             <div class="company-topline">
               <div class="company-name-wrap">
-                <div class="company-name">${company.name}</div>
+                <div class="company-name">${highlightSearch(company.name)}</div>
                 ${renderAgencies(company)}
               </div>
             </div>
@@ -734,7 +798,7 @@ function renderLinks(links, className) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          ${link.label}
+          ${highlightSearch(link.label)}
         </a>
       `).join("")}
     </div>
@@ -822,9 +886,9 @@ function renderTable(data) {
   tbody.innerHTML = data.map(row => `
     <tr>
       <td data-label="Entity">
-        ${row.sectionLabel ? `<div class="section-label">${row.sectionLabel}</div>` : ""}
-        <div class="entity-name">${row.entity}</div>
-        <div class="description">${row.description}</div>
+        ${row.sectionLabel ? `<div class="section-label">${highlightSearch(row.sectionLabel)}</div>` : ""}
+        <div class="entity-name">${highlightSearch(row.entity)}</div>
+        <div class="description">${highlightSearch(row.description)}</div>
       </td>
 
       <td data-label="Companies">
@@ -836,7 +900,7 @@ function renderTable(data) {
       </td>
 
       <td data-label="DHS Policies and Other DHS Resources">
-${renderLinks(row.actionLinks, "action-links")}
+        ${renderLinks(row.actionLinks, "action-links")}
       </td>
     </tr>
   `).join("");
@@ -1197,6 +1261,7 @@ function loadTab(index) {
   currentData = getRowsForTab(index);
   renderTabs();
   renderCurrentData();
+  scrollTableToTop();
 }
 
 function loadAllTabs() {
@@ -1204,6 +1269,7 @@ function loadAllTabs() {
   currentData = allData;
   renderTabs();
   renderCurrentData();
+  scrollTableToTop();
 }
 
 function setAgencyFilter(agency) {
@@ -1226,6 +1292,7 @@ function setAgencyFilter(agency) {
   updateAgencyFilterOptions(allData);
   renderTabs();
   renderCurrentData();
+  scrollTableToTop();
 }
 
 function loadInitialData() {
