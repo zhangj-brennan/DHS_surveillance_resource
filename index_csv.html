@@ -6,7 +6,7 @@
 <title>Entity Company Table</title>
 
 <style>
- @font-face {
+@font-face {
   font-family: "Benton";
   src: url("Benton Sans/Benton Sans Book.otf");
 }
@@ -16,12 +16,132 @@
   src: url("Benton Sans/Benton Sans Bold.otf");
 }
 
+:root {
+  --mobile-breakpoint: 650px;
+}
+
 body {
   font-family: "Benton", Helvetica, Arial, sans-serif;
   margin: 32px;
   color: #000;
   background: #fff;
 }
+
+h1 {
+  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+  font-size: 24px;
+}
+
+/* sticky header */
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fff;
+  padding: 12px 0 14px;
+  border-bottom: 3px solid #000;
+}
+
+.sticky-header h1 {
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+/* controls */
+
+.controls-area,
+.search-control,
+.filter-control,
+.mobile-filter-control {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.controls-area {
+  gap: 8px;
+  margin: 0;
+}
+
+.desktop-tabs-wrap {
+  display: block;
+}
+
+.mobile-filter-control {
+  display: none;
+}
+
+.filter-label {
+  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.table-select,
+.table-search {
+  width: 320px;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-family: "Benton", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.3;
+  color: #000;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 0;
+  padding: 6px 8px;
+}
+
+.table-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.mobile-tab-select {
+  display: none;
+}
+
+.filter-count {
+  font-size: 12px;
+  color: #dbdada;
+}
+
+/* tabs */
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.tab-btn {
+  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+  border: 1px solid #000;
+  background: #fff;
+  padding: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.tab-btn.active {
+  background: #000;
+  color: #fff;
+}
+
+.tab-btn.disabled,
+.tab-btn:disabled {
+  color: #b0b0b0;
+  border-color: #b0b0b0;
+  background: #fff;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* table */
 
 table {
   width: 100%;
@@ -50,27 +170,23 @@ th {
 }
 
 .company-cell {
-  width: 20%;
+  width: 30%;
+  min-width: 500px;
 }
 
 .links-cell {
   width: 18%;
 }
 
-.company-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px 24px;
-}
+/* row content */
 
 .section-label {
   display: inline-block;
   font-family: "BentonStrong", Helvetica, Arial, sans-serif;
   font-size: 10px;
-  line-height: 1.1;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: red;
+  color: #007194;
 }
 
 .entity-name {
@@ -82,7 +198,29 @@ th {
 .description {
   font-size: 15px;
   line-height: 1.4;
-  color: #000;
+}
+
+/* companies */
+
+.company-section-total,
+.spark-total,
+.single-year-value {
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.company-section-total {
+  margin-bottom: 12px;
+}
+
+.spark-total {
+  margin-top: 2px;
+}
+
+.company-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 24px;
 }
 
 .company {
@@ -101,8 +239,12 @@ th {
   align-items: baseline;
 }
 
-.company-name {
+.company-name,
+.agency-tag {
   font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+}
+
+.company-name {
   font-size: 12px;
 }
 
@@ -110,21 +252,28 @@ th {
   min-width: 0;
 }
 
-.overall-value {
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
 .company-detail {
   margin-top: 4px;
 }
 
-.single-year-value {
-  font-size: 12px;
-  color: #000;
-  font-variant-numeric: tabular-nums;
+.agency-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 3px;
 }
+
+.agency-tag {
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: #fff;
+  background: #000;
+  padding: 4px 4px 2px;
+  text-transform: uppercase;
+}
+
+/* sparklines */
 
 .sparkline {
   width: 120px;
@@ -134,22 +283,6 @@ th {
 
 .no-sparkline {
   display: none;
-}
-
-.link-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 11px;
-}
-
-a {
-  color: #000;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
 }
 
 .spark-tooltip {
@@ -167,120 +300,37 @@ a:hover {
   white-space: nowrap;
 }
 
-.tabs {
+/* links */
+
+.link-list {
   display: flex;
+  flex-direction: column;
   gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 6px;
+  font-size: 11px;
 }
 
-.tab-btn {
-  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
-  border: 1px solid #000;
-  background: #fff;
-  padding: 4px;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-.tab-btn.active {
-  background: #000;
-  color: #fff;
-}
-
-.tab-btn.disabled,
-.tab-btn:disabled {
-  color: #b0b0b0;
-  border: 1px solid #b0b0b0;
-  background: #fff;
-  cursor: not-allowed;
-  opacity: 0.65;
-}
-
-.tab-btn.disabled:hover,
-.tab-btn:disabled:hover {
+a {
+  color: #000;
   text-decoration: none;
 }
 
-.agency-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 3px;
-}
-
-.agency-tag {
-  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
-  font-size: 10px;
-  line-height: 1;
-  letter-spacing: 0.03em;
-  color: #fff;
-  background-color: #000;
-  padding: 4px 4px 2px;
-  text-transform: uppercase;
-}
-
-/* controls */
-
-.controls-area {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin: 0 0 24px;
-}
-
-.desktop-tabs-wrap {
-  display: block;
-}
-
-.mobile-filter-control {
-  display: none;
-}
-
-.filter-control {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.filter-label {
-  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.table-select {
-  width: 320px;
-  max-width: 100%;
-  font-family: "Benton", Helvetica, Arial, sans-serif;
-  font-size: 13px;
-  line-height: 1.3;
-  color: #000;
-  background: #fff;
-  border: 1px solid #000;
-  border-radius: 0;
-  padding: 6px 8px;
-  box-sizing: border-box;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-.mobile-tab-select {
-  display: none;
-}
-
-.filter-count {
-  font-size: 12px;
-  color: #dbdada;
+a:hover {
+  text-decoration: underline;
 }
 
 /* mobile */
 
-@media (max-width: 900px) {
+@media (max-width: 650px) {
   body {
-    margin: 18px;
+    margin: 15px;
+  }
+
+  .sticky-header h1 {
+    font-size: 24px;
+    line-height: 1.15;
+    margin: 0;
+      border-bottom: none;
+
   }
 
   .desktop-tabs-wrap {
@@ -289,25 +339,35 @@ a:hover {
 
   .mobile-filter-control {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
   }
 
   .mobile-tab-select {
     display: block;
   }
 
-  .table-select {
+  .table-select,
+  .table-search {
     width: 100%;
+    font-size: 14px;
+    padding: 6px 8px 3px;
+    min-height: 24px;
   }
 
- .company-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px 16px;
-  }
+.section-label {
+  
+  color: #6CBAD6;
 }
 
-@media (max-width: 800px) {
+  .filter-label {
+    font-size: 11px;
+    margin-bottom: 0;
+    padding: 0;
+  }
+
+  table {
+    margin: 0px;
+  }
+
   table,
   thead,
   tbody,
@@ -322,18 +382,18 @@ a:hover {
   }
 
   tr {
-    border-top: 3px solid #000;
     padding: 12px 0;
   }
 
   td {
-  border-top: 1px solid #d9d9d9;
-  padding: 14px 0;
-}
+    border-top: 1px solid #d9d9d9;
+    padding: 14px 0;
+  }
 
-td:first-child {
-  border-top: none;
-}
+  td:first-child {
+    border-top: none;
+  }
+
   td::before {
     content: attr(data-label);
     display: block;
@@ -343,92 +403,60 @@ td:first-child {
     margin-bottom: 6px;
   }
 
+  td[data-label="Entity"] {
+    position: static;
+    background: transparent;
+    border-bottom: none;
+  }
+
+  td[data-label="Entity"]::before {
+    display: none;
+  }
+
+  td[data-label="Entity"] .description {
+    margin-top: 10px;
+  }
+
+  .company-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 16px;
+  }
+
   .sparkline,
   .no-sparkline {
     grid-column: 1 / -1;
     width: 150px;
   }
 }
-h1{
-  font-size:24px;
-    font-family: "BentonStrong", Helvetica, Arial, sans-serif;
-}
-
-.sticky-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: #fff;
-  padding: 12px 0 14px;
-  border-bottom: 1px solid #ccc;
-}
-
-.sticky-header h1 {
-  margin-top: 0;
-  margin-bottom: 14px;
-}
-
-@media (max-width: 900px) {
-  .sticky-header h1 {
-    font-size: 22px;
-    line-height: 1.15;
-  }
-  @media (max-width: 900px) {
-
-  .table-select,
-  .mobile-tab-select,
-  .agency-select {
-    font-size: 18px;
-    padding: 12px 14px;
-    min-height: 48px;
+@media (max-width: 650px) {
+  tr {
+    position: relative;
   }
 
-  .filter-label {
-    font-size: 14px;
-    margin-bottom: 4px;
+  td[data-label="Entity"] {
+    display: contents;
   }
 
-}
-}
-.spark-total {
-  margin-top: 2px;
-  font-family: "Benton", Helvetica, Arial, sans-serif;
-  font-size: 12px;
-  line-height: 1.2;
-  color: #000;
-}
-.company-section-total {
-  font-family: "Benton", Helvetica, Arial, sans-serif;
-  font-size: 12px;
-  line-height: 1.2;
-  margin-bottom: 12px;
-  color: #000;
-}
-.search-control {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
+  td[data-label="Entity"]::before {
+    display: none;
+  }
 
-.table-search {
-  width: 320px;
-  max-width: 100%;
-  box-sizing: border-box;
+  .mobile-row-sticky-title {
+    position: sticky;
+    top: 180px;
+    z-index: 25;
+    background: #000;
+    color:white;
+    padding: 6px 10px;
+    margin:0px;
 
-  font-family: "Benton", Helvetica, Arial, sans-serif;
-  font-size: 13px;
+  }
 
-  border: 1px solid #000;
-  background: #fff;
-  padding: 6px 8px;
-}
-
-@media (max-width:900px) {
-  .table-search {
-    width: 100%;
-    font-size: 18px;
-    padding: 12px 14px;
-    min-height: 48px;
+  td[data-label="Entity"] .description {
+    display: block;
+    margin-top: 10px;
+    padding: 14px 0;
+    border-top: none;
   }
 }
 </style>
@@ -439,7 +467,7 @@ h1{
 <h1>DHS Interior Surveilance Resource</h1>
 
 <div class="controls-area">
-  <div class="search-control">
+  <!-- <div class="search-control">
   <label class="filter-label" for="search-box">Search</label>
   <input
     id="search-box"
@@ -448,7 +476,7 @@ h1{
     placeholder="Search types, companies, agencies..."
     oninput="setSearchFilter(this.value)"
   />
-</div>
+</div> -->
 
   <div class="desktop-tabs-wrap">
     <label class="filter-label">Types:</label>
@@ -885,9 +913,12 @@ function renderTable(data) {
 
   tbody.innerHTML = data.map(row => `
     <tr>
-      <td data-label="Entity">
-        ${row.sectionLabel ? `<div class="section-label">${highlightSearch(row.sectionLabel)}</div>` : ""}
-        <div class="entity-name">${highlightSearch(row.entity)}</div>
+     <td data-label="Entity">
+      <div class="mobile-row-sticky-title">
+  ${row.sectionLabel ? `<div class="section-label">${highlightSearch(row.sectionLabel)}</div>` : ""}
+  <div class="entity-name">${highlightSearch(row.entity)}</div>
+</div>
+
         <div class="description">${highlightSearch(row.description)}</div>
       </td>
 
