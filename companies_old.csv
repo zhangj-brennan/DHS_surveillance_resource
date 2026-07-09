@@ -1,0 +1,102 @@
+Category,Surveillance Type,Contractor Name,Component - Funding,2026 Obligations,2025 Obligations,2024 Obligations,2023 Obligations,2022 Obligations,2021 Obligations (after Jan. 19)
+Type of Biometric Collection or Technology,Facial recognition,NEC Corporation,OBIM,,8000000,8000000,8000000,8000000,8000000
+Type of Biometric Collection or Technology,Facial recognition,Clearview AI,"ICE, CBP",,3800000,1100000,788000,1000000,500000
+Type of Biometric Collection or Technology,Iris scans,Bi2 Technologies,ICE,29700000,,,,,
+Type of Biometric Collection or Technology,Fingerprints,Aware,CBP,,,232000,232000,332000,332000
+Type of Biometric Collection or Technology,Fingerprints,NEC Corporation,ICE,,447000,,235000,,
+Type of Biometric Collection or Technology,Fingerprints,Mosa Technology Solutions,ICE,34000,,,,,
+Type of Biometric Collection or Technology,DNA tests,SNA International (ICE; Science and Technology Directorate (S&T)),,,6200000,,,25000,707000
+Type of Biometric Collection or Technology,Integrated biometrics,Panamerica Computers,CBP,,,944000,989000,861000,11000
+Type of Biometric Collection or Technology,Integrated biometrics,NEC Corporation,Secret Service,,199000,387000,375000,396000,385000
+Type of Biometric Collection or Technology,Integrated biometrics,Parsons,ICE,,557000,,526000,,
+Type of Biometric Collection or Technology,Integrated biometrics,Intellisense Systems,S&T,,175000,,,,
+Type of Biometric Collection or Technology,Integrated biometrics,Idea Mind,S&T,,174000,,,,
+Type of Biometric Collection or Technology,Integrated biometrics,Integrated Biometrics,S&T,,167000,,,,
+Type of Biometric Collection or Technology,Integrated biometrics,Enterprise Technology Solutions,ICE,,88000,,,,
+Type of Biometric Collection or Technology,Biometric collection from immigration benefit applicants,Amentum,USCIS,,79500000,65700000,48900000,,
+Type of Biometric Collection or Technology,IDENT & HART Databases,General Dynamics,OBIM,58100000,76000000,149800000,58700000,12600000,4800000
+Type of Biometric Collection or Technology,IDENT & HART Databases,Peraton,"OBIM, Chief Information Officer",,26800000,28700000,29000000,10100000,38000000
+Type of Biometric Collection or Technology,IDENT & HART Databases,Science Applications International Corporation,S&T,,13100000,14200000,6000000,,19000
+Type of Biometric Collection or Technology,IDENT & HART Databases,Amazon,Chief Information Officer,,,7500000,5000000,,
+Type of Biometric Collection or Technology,IDENT & HART Databases,Computer World Services,OBIM,,111000,1900000,,,
+Type of Location Tracking,Remote acquisition and purchase of cell phone location information,Penlink,"CBP, ICE",2900000,2900000,1400000,1400000,813000,587000
+Type of Location Tracking,Remote acquisition and purchase of cell phone location information,Babel Street,"CBP, ICE, USSS",10300000,,3600000,3600000,929000,4700000
+Type of Location Tracking,Remote acquisition and purchase of cell phone location information,Techops Specialty Vehicles,ICE,826000,818000,,,,
+Type of Location Tracking,Remote acquisition and purchase of cell phone location information,Relx (Lexis Nexis),USSS,,,95000,45000,140000,
+Type of Location Tracking,Remote acquisition and purchase of cell phone location information,Motorola,CBP,,94000,59000,,,
+Type of Location Tracking,License plate readers (LPR) and LPR data,Thomson Reuters,ICE,,,,,,579000
+Type of Location Tracking,License plate readers (LPR) and LPR data,Thundercat Technology,CBP,,,,,,425000
+Type of Location Tracking,License plate readers (LPR) and LPR data,Widepoint Integrated Solutions,CBP,,209000,462000,,,
+Type of Location Tracking,License plate readers (LPR) and LPR data,Vetted Security Solutions,"ICE, CBP",,25000,40000,34000,,
+Type of Location Tracking,License plate readers (LPR) and LPR data,Motorola,ICE,,95000,,,,
+Type of Location Tracking,Other vehicle tracking,Berla,CBP,,210000,148000,258000,425000,
+Type of Location Tracking,Other vehicle tracking,Starchase,CBP,,,,,250000,
+Type of Phone Access Tools,Digital forensics,Cellebrite,"ICE, CBP, USSS",524000,14400000,15200000,10700000,7500000,7200000
+Type of Phone Access Tools,Digital forensics,Magnet Forensics,"ICE, USCIS, USSS",1900000,6800000,10400000,,,
+Type of Phone Access Tools,Digital forensics,Panamerica Computers,"ICE, USSS",,6400000,1200000,,,
+Type of Phone Access Tools,Digital forensics,MSAB,CBP,,1100000,,1100000,698000,940000
+Type of Phone Access Tools,Digital forensics,Griffeye,ICE,,915000,876000,837000,799000,601000
+Type of Phone Access Tools,Digital forensics,GetData,"ICE, USSS",177000,789000,633000,431000,278000,379000
+Type of Phone Access Tools,Digital forensics,Magnet Forensics & Cyber Triage,USSS,,,1300000,,,
+Type of Phone Access Tools,Digital forensics,Passware,"ICE, USSS",41000,288000,252000,216000,51000,
+Type of Phone Access Tools,Digital forensics,Oxygen Forensics,ICE,,63000,63000,64000,89000,397000
+Type of Phone Access Tools,Digital forensics,Cyber Triage,USSS,,,,,327000,327000
+Type of Phone Access Tools,Digital forensics,Exterro,ICE,,34000,31000,160000,240000,
+Type of Phone Access Tools,Digital forensics,FinalMobile,ICE,,29000,26000,26000,26000,26000
+Type of Phone Access Tools,Remote hacking,Paragon,ICE,,,2000000,,,
+Type of Phone Access Tools,Wiretaps,JSI Telecom,ICE,6800000,7300000,1500000,2800000,3000000,2800000
+Type of Video Surveillance,Drones,General Atomics,CBP,280800000,65600000,80800000,63900000,68800000,85600000
+Type of Video Surveillance,Drones,Skydio,"CBP, ICE",269000,10200000,3000000,1400000,2800000,
+Type of Video Surveillance,Drones,Teal Drones,CBP,,,25000,2100000,1000000,
+Type of Video Surveillance,Drones,Parrot,CBP,,16000,56000,118000,2600000,
+Type of Video Surveillance,Drones,Auterion,CBP,,,,,295000,
+Type of Video Surveillance,Drones,Robinson Helicopter Company,CBP,,,43000,,,
+Type of Video Surveillance,Body-worn and vehicle-mounted cameras,Axon,CBP,2800000,9600000,30500000,16500000,,
+Type of Video Surveillance,Body-worn and vehicle-mounted cameras,Guidehouse,CBP,98000,,,,,
+Type of Video Surveillance,Mobile security cameras,Liveview Technologies,ICE,760000,,,,,
+Type of Data Purchase,Social media monitoring and open-source intelligence,General Dynamics,ICE,934000,6600000,11400000,12600000,12000000,11100000
+Type of Data Purchase,Social media monitoring and open-source intelligence,Fivecast,"ICE, CBP, USSS",,1700000,3000000,2900000,1200000,
+Type of Data Purchase,Social media monitoring and open-source intelligence,Barbaricum,"ICE, CBP",,657000,1100000,1100000,2400000,1100000
+Type of Data Purchase,Social media monitoring and open-source intelligence,Skopenow,"ICE, USSS",,20000,1300000,1400000,984000,960000
+Type of Data Purchase,Social media monitoring and open-source intelligence,Marinus Analytics,"ICE, CBP, USCIS",99000,714000,432000,419000,1000000,795000
+Type of Data Purchase,Social media monitoring and open-source intelligence,Zignal Labs,"ICE, USSS",,1900000,379000,370000,361000,352000
+Type of Data Purchase,Social media monitoring and open-source intelligence,ShadowDragon,ICE,,90000,1200000,1200000,87000,602000
+Type of Data Purchase,Social media monitoring and open-source intelligence,Authentic8,"ICE, USSS, S&T",5000,287000,474000,591000,534000,519000
+Type of Data Purchase,Social media monitoring and open-source intelligence,OSINT Combine,"ICE, CBP, USSS",,1700000,245000,173000,,
+Type of Data Purchase,Social media monitoring and open-source intelligence,Seerist,CBP,,,,,718000,
+Type of Data Purchase,Social media monitoring and open-source intelligence,GeoSpark Analytics,CBP,,,,,,661000
+Type of Data Purchase,Social media monitoring and open-source intelligence,Giant Oak,ICE,,,,,138000,348000
+Type of Data Purchase,Commercial data (not including real-time location data),Relx (Lexis Nexis),"ICE, CBP, USCIS, FPS",6200000,7400000,8700000,9500000,7500000,4000000
+Type of Data Purchase,Commercial data (not including real-time location data),Thomson Reuters,"ICE, Chief Information Officer",,7200000,6500000,6300000,10100000,1400000
+Type of Data Purchase,Commercial data (not including real-time location data),Whooster,"ICE, USSS",100000,344000,639000,585000,71000,71000
+Type of Data Purchase,Commercial data (not including real-time location data),Team Cymru,ICE,,130000,130000,,,295000
+Type of Data Purchase,Commercial data (not including real-time location data),Transunion,USSS,52000,,,,,
+Type of Data Purchase,Skip tracing,Capgemini,ICE,,12200000,,,,
+Type of Data Purchase,Skip tracing,SOS International,ICE,,8600000,,,,
+Type of Data Purchase,Skip tracing,Global Recovery Group,ICE,7200000,1300000,,,,
+Type of Data Purchase,Skip tracing,Bluehawk,ICE,,2700000,,,,
+Type of Data Purchase,Skip tracing,GEO Group,ICE,,1600000,,,,
+Type of Data Purchase,Skip tracing,Constellis,ICE,,1500000,,,,
+Type of Data Purchase,Skip tracing,MVM,ICE,1400000,,,,,
+Type of Data Purchase,Skip tracing,National Protective Services,ICE,,910000,,,,
+Type of Data Purchase,Skip tracing,Constellation,ICE,,767000,,,,
+Type of Data Purchase,Skip tracing,Government Support Services,ICE,,741000,,,,
+Type of Data Purchase,Skip tracing,AI Solutions 87,ICE,,637000,,,,
+Type of Data Purchase,Skip tracing,Gravitas Professional Services,ICE,,428000,,,,
+Type of Data Purchase,Skip tracing,Fraud Inc,ICE,,348000,,,,
+Type of Data Purchase,Skip tracing,Response AI Solutions,ICE,,128000,,,,
+Type of Data Purchase,Skip tracing,Enprovera,ICE,,35000,,,,
+Type of Data Analysis Tool,"Investigative Case Management (ICM), FALCON, Immigration OS, & Enhanced Leads Identification and Targeting for Enforcement (ELITE)",Palantir,ICE,11400000,81100000,20400000,20500000,27000000,24200000
+Type of Data Analysis Tool,RAVEn,Booz Allen Hamilton,ICE,,12200000,15500000,18300000,12200000,11600000
+Type of Data Analysis Tool,RAVEn,Acuity,ICE,,1500000,12600000,15800000,20900000,
+Type of Data Analysis Tool,RAVEn,Alethix,ICE,,,16000000,12700000,11500000,6500000
+Type of Data Analysis Tool,RAVEn,ESRI,ICE,,,,,290000,
+Type of Data Analysis Tool,RAVEn,Panamerica Computers,ICE,,,,,,95000
+Type of Data Analysis Tool,Project SAFEHAVEN,Edge Ops,ICE,12200000,,,,,
+Type of Data Analysis Tool,LeadTrac,Strategic Operations Solutions,ICE,,462000,911000,907000,898000,1300000
+Type of Data Analysis Tool,Other data analysis,Palantir,"Chief Information Officer, ICE, USSS",104900000,,,,,
+Type of Data Analysis Tool,Other data analysis,Deloitte,ICE,,2100000,2000000,2700000,936000,1400000
+Type of Data Analysis Tool,Other data analysis,Relx (Lexis Nexis),USSS,5100000,,,,,
+Type of Data Analysis Tool,Other data analysis,Thomson Reuters,CBP,,,,,1100000,1100000
+Type of Data Analysis Tool,Other data analysis,AT&T,ICE,,2100000,,,,
+Type of Data Analysis Tool,Other data analysis,Hyland,USCIS,1200000,,,,,

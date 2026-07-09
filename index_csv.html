@@ -317,6 +317,14 @@ a {
 a:hover {
   text-decoration: underline;
 }
+thead th {
+  position: sticky;
+  top: var(--sticky-offset);
+  z-index: 900;
+  background: #fff;
+
+  box-shadow: inset 0 -1px 0 #000;
+}
 
 /* mobile */
 
@@ -464,20 +472,9 @@ a:hover {
 <body><div class="spark-tooltip" id="spark-tooltip"></div>
 <div class="sticky-header">
 
-<h1>DHS Interior Surveilance Resource</h1>
+<h1>DHS Interior Surveillance Resource</h1>
 
 <div class="controls-area">
-  <!-- <div class="search-control">
-  <label class="filter-label" for="search-box">Search</label>
-  <input
-    id="search-box"
-    class="table-search"
-    type="search"
-    placeholder="Search types, companies, agencies..."
-    oninput="setSearchFilter(this.value)"
-  />
-</div> -->
-
   <div class="desktop-tabs-wrap">
     <label class="filter-label">Types:</label>
     <div class="tabs" id="tabs"></div>
@@ -491,12 +488,23 @@ a:hover {
   </div>
 
   <div class="filter-control">
-    <label class="filter-label" for="agency-filter">Agency filter:</label>
+    <label class="filter-label" for="agency-filter">Subcomponent Filter</label>
     <select class="table-select agency-select" id="agency-filter" onchange="setAgencyFilter(this.value)">
       <option value="">All agencies</option>
     </select>
     <div class="filter-count" id="filter-count"></div>
   </div>
+
+  <div class="search-control">
+  <label class="filter-label" for="search-box">Search</label>
+  <input
+    id="search-box"
+    class="table-search"
+    type="search"
+    placeholder="Search types, companies, agencies..."
+    oninput="setSearchFilter(this.value)"
+  />
+</div>
 
 </div>
 </div>
@@ -513,6 +521,7 @@ a:hover {
 </table>
 
 <script>
+
 
 let searchFilter = "";
 
@@ -534,7 +543,14 @@ function scrollTableToTop() {
   const table = document.querySelector("table");
   if (!table) return;
 
-  const y = table.getBoundingClientRect().top + window.pageYOffset - 350;
+  const stickyHeight =
+  document.querySelector(".sticky-header")?.offsetHeight || 0;
+
+const y =
+  table.getBoundingClientRect().top +
+  window.pageYOffset -
+  stickyHeight -
+  20;
 
   window.scrollTo({
     top: y,
@@ -554,8 +570,8 @@ function makeSparkline(yearly) {
   const width = 120;
   const height = 42;
 
-  const leftPad = 40;
-  const rightPad = 12;
+  const leftPad = 0;
+  const rightPad = 20;
   const topPad = 3;
   const bottomPad = 16;
 
@@ -593,7 +609,7 @@ function makeSparkline(yearly) {
   const maxPointY = yScale(maxEntry.value);
 
   const labelX = 2;
-  const connectorStartX = 30;
+  const connectorStartX = 0;
   const connectorEndX = Math.max(connectorStartX, maxPointX - 5);
 
   const points = entries
@@ -616,7 +632,7 @@ function makeSparkline(yearly) {
         cx="${xScale(d.year)}"
         cy="${yScale(d.value)}"
         r="2.8"
-        fill="black"
+        fill="#007194"
         pointer-events="none"
       ></circle>
     </g>
@@ -627,18 +643,18 @@ function makeSparkline(yearly) {
   return `
     <svg class="sparkline" viewBox="0 0 ${width} ${height}" aria-label="Yearly values">
       <text
-        x="${labelX}"
+        x="${width}"
         y="${maxPointY + 4}"
-        font-size="10"
+        font-size="8"
         font-family="BentonStrong"
         text-anchor="start"
         fill="#000"
       >${axisLabel}</text>
 
    <line
-      x1="${connectorStartX}"
+      x1="${connectorEndX+2}"
       y1="${maxPointY}"
-      x2="${connectorEndX}"
+      x2="${width-2}"
       y2="${maxPointY}"
       stroke="#000"
       stroke-width=".5"
@@ -648,7 +664,7 @@ function makeSparkline(yearly) {
       <polyline
         points="${points}"
         fill="none"
-        stroke="black"
+        stroke="#007194"
         stroke-width="2"
       />
 
@@ -1346,6 +1362,7 @@ function loadInitialData() {
       updateAgencyFilterOptions(allData);
       renderTabs();
       renderCurrentData();
+      updateStickyOffsets();
     })
     .catch(error => {
       console.error(error);
@@ -1358,6 +1375,21 @@ function loadInitialData() {
       `;
     });
 }
+
+function updateStickyOffsets() {
+  const sticky = document.querySelector(".sticky-header");
+  const thead = document.querySelector("thead");
+
+  if (!sticky || !thead) return;
+
+  document.documentElement.style.setProperty(
+    "--sticky-offset",
+    `${sticky.offsetHeight}px`
+  );
+}
+
+window.addEventListener("resize", updateStickyOffsets);
+window.addEventListener("load", updateStickyOffsets);
 
 loadInitialData();
 </script>
