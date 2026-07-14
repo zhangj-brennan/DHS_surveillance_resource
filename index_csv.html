@@ -225,7 +225,7 @@ th {
 
 .company {
   display: block;
-  margin-bottom: 16px;
+  margin-bottom: 6px;
 }
 
 .company:last-child {
@@ -277,7 +277,7 @@ th {
 
 .sparkline {
   width: 120px;
-  height: 42px;
+  height: 54px;
   overflow: visible;
 }
 
@@ -326,6 +326,43 @@ thead th {
   box-shadow: inset 0 -1px 0 #000;
 }
 
+.usecase-group {
+  margin-top: 10px;
+  margin-left: 16px;
+}
+
+.usecase-header {
+  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+  font-size: 10px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.usecase-link {
+  display: block;
+  margin: 2px 0;
+}
+.usecase-group {
+  margin-top: 10px;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.usecase-header {
+  margin: 0 0 4px 0;
+  padding: 0;
+}
+
+.usecase-list {
+  margin: 0;
+  padding-left: 18px; /* only the bullets are indented */
+}
+
+.usecase-list li {
+  margin: 2px 0;
+}
 /* mobile */
 
 @media (max-width: 650px) {
@@ -568,13 +605,13 @@ const y =
 }
 
 function makeSparkline(yearly) {
+  
   const entries = Object.entries(yearly)
     .map(([year, value]) => ({
       year: +year,
       value: +value
     }))
     .sort((a, b) => a.year - b.year);
-
 
   const width = 120;
   const height = 42;
@@ -763,46 +800,62 @@ function renderAgencies(company) {
     </div>
   `;
 }
-function renderCompanies(companies) {
-  const sectionTotal = companies.reduce((sum, company) => {
-  return sum + Object.values(company.yearly || {}).reduce((s, v) => s + Number(v || 0), 0);
-}, 0);
+function renderCompanies(companies, allCompanies = companies) {
+  const displayedCompanies = Array.isArray(companies) ? companies : [];
+  const totalSource = Array.isArray(allCompanies) ? allCompanies : [];
 
-const agencyCount = new Set(
-  companies.flatMap(company => company.agencies || [])
-).size;
+  if (totalSource.length === 0) {
+    return `
+      <div class="no-vendor-info">
+        No public vendor information
+      </div>
+    `;
+  }
 
-const companyCount = companies.length;
+  const sectionTotal = totalSource.reduce((sum, company) => {
+    const companyTotal = Object.values(company.yearly || {}).reduce(
+      (companySum, value) =>
+        companySum + Number(value || 0),
+      0
+    );
 
-const allYears = companies.flatMap(company =>
-  Object.keys(company.yearly || {}).map(Number)
-);
+    return sum + companyTotal;
+  }, 0);
 
-const minYear = Math.min(...allYears);
-const maxYear = Math.max(...allYears);
+  const allYears = totalSource.flatMap(company =>
+    Object.keys(company.yearly || {})
+      .map(Number)
+      .filter(Number.isFinite)
+  );
 
-const summary =
-  // `${companyCount} ${companyCount === 1 ? "company" : "companies"} • ` +
-  // `${agencyCount} ${agencyCount === 1 ? "agency" : "agencies"} • ` +
-  `${minYear}–${maxYear} total: ${formatMoney(sectionTotal)}`;
+  const summary = allYears.length
+    ? `${Math.min(...allYears)}–${Math.max(...allYears)} total: ${formatMoney(sectionTotal)}`
+    : `Total: ${formatMoney(sectionTotal)}`;
 
   return `
     <div class="company-section-total">
-  ${summary}
-</div>
+      ${summary}
+    </div>
 
     <div class="company-grid">
-      ${companies.map(company => {
-        const companyTotal = Object.values(company.yearly || {})
-        .reduce((sum, value) => sum + Number(value || 0), 0);
+      ${displayedCompanies.map(company => {
         const yearlyEntries = company.yearly
           ? Object.entries(company.yearly)
               .map(([year, value]) => ({
-                year: +year,
-                value: +value
+                year: Number(year),
+                value: Number(value)
               }))
+              .filter(entry =>
+                Number.isFinite(entry.year) &&
+                Number.isFinite(entry.value)
+              )
               .sort((a, b) => a.year - b.year)
           : [];
+
+        const companyTotal = yearlyEntries.reduce(
+          (sum, entry) => sum + entry.value,
+          0
+        );
 
         let detail = "";
 
@@ -820,15 +873,18 @@ const summary =
           <div class="company">
             <div class="company-topline">
               <div class="company-name-wrap">
-                <div class="company-name">${highlightSearch(company.name)}</div>
+                <div class="company-name">
+                  ${highlightSearch(company.name)}
+                </div>
 
-                  <div class="company-total">
-                    ${formatMoney(companyTotal)}
-                  </div>
+                <div class="company-total">
+                  ${formatMoney(companyTotal)}
+                </div>
 
-                  ${renderAgencies(company)}
+                ${renderAgencies(company)}
               </div>
             </div>
+
             <div class="company-detail">
               ${detail}
             </div>
@@ -839,9 +895,20 @@ const summary =
   `;
 }
 function renderLinks(links, className) {
+  const useCasePrefix = "https://www.dhs.gov/ai/use-case-inventory/";
+
+  const useCaseLinks = links.filter(link =>
+    link.url.startsWith(useCasePrefix)
+  );
+
+  const regularLinks = links.filter(link =>
+    !link.url.startsWith(useCasePrefix)
+  );
+
   return `
     <div class="link-list ${className}">
-      ${links.map(link => `
+
+      ${regularLinks.map(link => `
         <a
           href="${link.url}"
           target="_blank"
@@ -850,6 +917,33 @@ function renderLinks(links, className) {
           ${highlightSearch(link.label)}
         </a>
       `).join("")}
+
+      ${useCaseLinks.length ? `
+        <div class="usecase-group">
+
+  <div class="usecase-header">
+    DHS AI Use Case Inventory
+  </div>
+
+  <ul class="usecase-list">
+    ${useCaseLinks.map(link => `
+      <li>
+        <a
+          href="${link.url}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ${highlightSearch(link.label)}
+        </a>
+      </li>
+    `).join("")}
+  </ul>
+
+</div>
+
+        </div>
+      ` : ""}
+
     </div>
   `;
 }
@@ -900,7 +994,10 @@ function filterCompaniesForAgency(row, agency) {
 
   return {
     ...row,
-    companies: (row.companies || []).filter(company => companyMatchesAgency(company, agency))
+    allCompanies: row.companies || [],
+    companies: (row.companies || []).filter(company =>
+      companyMatchesAgency(company, agency)
+    )
   };
 }
 
@@ -944,7 +1041,7 @@ function renderTable(data) {
       </td>
 
       <td data-label="Companies">
-        ${renderCompanies(row.companies)}
+        ${renderCompanies(row.companies, row.allCompanies || row.companies)}
       </td>
 
       <td data-label="Further Information on Capabilities, Uses, and Abuses">
