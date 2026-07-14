@@ -1,0 +1,117 @@
+Category,Surveillance Type,Contractor Name,Component - Funding,2026 Obligations,2025 Obligations,2024 Obligations,2023 Obligations,2022 Obligations,2021 Obligations (after Jan. 19)
+Type of Biometric Collection or Technology,Facial recognition,NEC Corporation,OBIM,,"8,000,000.00","8,000,000.00","8,000,000.00","8,000,000.00","8,000,000.00"
+Type of Biometric Collection or Technology,Facial recognition,Clearview AI,"ICE, CBP",,"3,800,000.00","1,100,000.00","788,000.00","1,000,000.00","500,000.00"
+Type of Biometric Collection or Technology,Iris scans,BI2 Technologies,ICE,"29,700,000.00",,,,,
+Type of Biometric Collection or Technology,Fingerprints,Aware,CBP,,,"232,000.00","232,000.00","332,000.00","332,000.00"
+Type of Biometric Collection or Technology,Fingerprints,NEC Corporation,ICE,,"447,000.00",,"235,000.00",,
+Type of Biometric Collection or Technology,Fingerprints,Mosa Technology Solutions,ICE,"34,000.00",,,,,
+Type of Biometric Collection or Technology,DNA tests,SNA International,"ICE, S&T",,"6,200,000.00",,,"-25,000.00","-707,000.00"
+Type of Biometric Collection or Technology,Integrated biometrics,Panamerica Computers,CBP,,,"944,000.00","989,000.00","861,000.00","-11,000.00"
+Type of Biometric Collection or Technology,Integrated biometrics,NEC Corporation,USSS,,"199,000.00","387,000.00","375,000.00","396,000.00","385,000.00"
+Type of Biometric Collection or Technology,Integrated biometrics,Parsons,ICE,,"558,000.00",,"526,000.00","87,000.00",
+Type of Biometric Collection or Technology,Integrated biometrics,Intellisense Systems,S&T,,"175,000.00",,,,
+Type of Biometric Collection or Technology,Integrated biometrics,Idea Mind,S&T,,"174,000.00",,,,
+Type of Biometric Collection or Technology,Integrated biometrics,Integrated Biometrics,S&T,,"167,000.00",,,,
+Type of Biometric Collection or Technology,Integrated biometrics,Enterprise Technology Solutions,ICE,,"88,000.00",,,,
+Type of Biometric Collection or Technology,Biometric collection from immigration benefit applicants,Amentum,USCIS,"116,200,000.00","79,500,000.00","65,700,000.00","48,900,000.00",,
+Type of Biometric Collection or Technology,Biometric collection from immigration benefit applicants,Pluribus Digital,USCIS,"-5,000,000.00","22,400,000.00","22,200,000.00","31,000,000.00","30,100,000.00","24,500,000.00"
+Type of Biometric Collection or Technology,Biometric collection from immigration benefit applicants,Idemia,USCIS,,,,,"1,300,000.00","1,500,000.00"
+Type of Biometric Collection or Technology,IDENT & HART Databases,General Dynamics,OBIM,"79,000,000.00","76,000,000.00","149,800,000.00","58,700,000.00","12,600,000.00","4,800,000.00"
+Type of Biometric Collection or Technology,IDENT & HART Databases,Peraton,"OBIM, Chief Information Officer, CBP",,"26,800,000.00","28,700,000.00","29,000,000.00","10,100,000.00","36,000,000.00"
+Type of Biometric Collection or Technology,IDENT & HART Databases,Science Applications International Corporation,S&T,,"13,100,000.00","14,200,000.00","6,000,000.00",,
+Type of Biometric Collection or Technology,IDENT & HART Databases,Amazon,Chief Information Officer,,,"7,500,000.00","5,000,000.00",,
+Type of Biometric Collection or Technology,IDENT & HART Databases,Computer World Services,OBIM,,"111,000.00","1,900,000.00",,,
+Type of Location Tracking,Remote acquisition and purchase of cell phone location information,Penlink,"CBP, ICE","2,900,000.00","2,900,000.00","1,400,000.00","1,400,000.00","813,000.00","587,000.00"
+Type of Location Tracking,Remote acquisition and purchase of cell phone location information,Babel Street,"CBP, ICE, USSS","10,300,000.00",,"3,600,000.00","3,600,000.00","929,000.00","4,700,000.00"
+Type of Location Tracking,Remote acquisition and purchase of cell phone location information,L3Harris,USSS,,,,,"3,600,000.00","663,000.00"
+Type of Location Tracking,Remote acquisition and purchase of cell phone location information,TechOps Specialty Vehicles,"ICE, USSS","2,300,000.00","1,900,000.00",,,,
+Type of Location Tracking,Remote acquisition and purchase of cell phone location information,Relx (Lexis Nexis),USSS,,,"95,000.00","45,000.00","140,000.00",
+Type of Location Tracking,Remote acquisition and purchase of cell phone location information,Motorola,CBP,,"94,000.00","59,000.00",,,
+Type of Location Tracking,Remote acquisition and purchase of cell phone location information,Hawk Analytics,ICE,,"12,000.00",,,,
+Type of Location Tracking,License plate readers (LPR) and LPR data,Thomson Reuters,ICE,,,,,,"579,000.00"
+Type of Location Tracking,License plate readers (LPR) and LPR data,Thundercat Technology,CBP,,,,,,"425,000.00"
+Type of Location Tracking,License plate readers (LPR) and LPR data,Widepoint Integrated Solutions,CBP,,"-209,000.00","462,000.00",,,
+Type of Location Tracking,License plate readers (LPR) and LPR data,Vetted Security Solutions,"ICE, CBP",,"25,000.00","40,000.00","34,000.00",,
+Type of Location Tracking,License plate readers (LPR) and LPR data,Motorola,ICE,,"95,000.00",,,,
+Type of Location Tracking,Other vehicle tracking,Berla,CBP,,"210,000.00","148,000.00","258,000.00","425,000.00",
+Type of Location Tracking,Other vehicle tracking,Starchase,CBP,,,,,"250,000.00",
+Type of Phone Access Tools,Digital forensics,Cellebrite,"ICE, CBP, USSS","4,300,000.00","14,400,000.00","15,200,000.00","10,700,000.00","7,500,000.00","7,200,000.00"
+Type of Phone Access Tools,Digital forensics,Magnet Forensics,"ICE, USCIS, USSS, CBP","1,900,000.00","6,800,000.00","10,400,000.00",,,
+Type of Phone Access Tools,Digital forensics,Panamerica Computers,"ICE, USSS","1,400,000.00","6,400,000.00","1,200,000.00",,,
+Type of Phone Access Tools,Digital forensics,MSAB,CBP,"146,000.00","1,100,000.00","1,000,000.00","1,100,000.00","698,000.00","940,000.00"
+Type of Phone Access Tools,Digital forensics,Griffeye,ICE,,"915,000.00","876,000.00","837,000.00","799,000.00","601,000.00"
+Type of Phone Access Tools,Digital forensics,GetData,"ICE, USSS","177,000.00","789,000.00","633,000.00","431,000.00","278,000.00","379,000.00"
+Type of Phone Access Tools,Digital forensics,Magnet Forensics & Cyber Triage,USSS,,,"1,300,000.00",,,
+Type of Phone Access Tools,Digital forensics,Passware,"ICE, USSS","41,000.00","288,000.00","252,000.00","216,000.00","51,000.00",
+Type of Phone Access Tools,Digital forensics,Oxygen Forensics,ICE,,"63,000.00","63,000.00","64,000.00","89,000.00","397,000.00"
+Type of Phone Access Tools,Digital forensics,Cyber Triage,USSS,,,,,"327,000.00","327,000.00"
+Type of Phone Access Tools,Digital forensics,Exterro,ICE,,"34,000.00","31,000.00","160,000.00","240,000.00",
+Type of Phone Access Tools,Digital forensics,SUMURI,ICE,"212,000.00",,,,,
+Type of Phone Access Tools,Digital forensics,Open Text,USSS,"150,000.00",,,,,
+Type of Phone Access Tools,Digital forensics,FinalMobile,ICE,,"29,000.00","26,000.00","26,000.00","26,000.00","26,000.00"
+Type of Phone Access Tools,Remote hacking,Paragon,ICE,,,"2,000,000.00",,,
+Type of Phone Access Tools,Wiretaps,JSI Telecom,ICE,"6,800,000.00","7,300,000.00","1,500,000.00","2,800,000.00","3,000,000.00","2,800,000.00"
+Type of Video Surveillance,Drones,General Atomics,CBP,"288,500,000.00","65,600,000.00","80,800,000.00","63,900,000.00","68,800,000.00","85,600,000.00"
+Type of Video Surveillance,Drones,MTSI,CBP,"3,100,000.00","2,800,000.00","2,400,000.00","2,200,000.00","2,700,000.00",
+Type of Video Surveillance,Drones,Skydio,"CBP, ICE, USSS","24,000.00","8,600,000.00","1,000,000.00","507,000.00","1,400,000.00",
+Type of Video Surveillance,Drones,Teal Drones,"CBP, ICE",,,"25,000.00","2,100,000.00","1,000,000.00",
+Type of Video Surveillance,Drones,WS Darley & Co,"CBP, ICE",,,,"20,000.00","1,400,000.00",
+Type of Video Surveillance,Drones,Atlantic Diving Supply,"CBP, ICE, USSS",,"107,000.00","49,000.00","296,000.00","459,000.00",
+Type of Video Surveillance,Drones,Parrot,CBP,,,"17,000.00","48,000.00","157,000.00",
+Type of Video Surveillance,Drones,Auterion,CBP,,,,,"295,000.00",
+Type of Video Surveillance,Drones,Robinson Helicopter Company,CBP,,,"43,000.00",,,
+Type of Video Surveillance,Drones,EagleNXT,CBP,"39,000.00",,,,,
+Type of Video Surveillance,Body-worn and vehicle-mounted cameras,Axon,"CBP, ICE, FPS, USSS","11,000,000.00","8,300,000.00","26,100,000.00","16,200,000.00","2,300,000.00","8,100,000.00"
+Type of Video Surveillance,Body-worn and vehicle-mounted cameras,Guidehouse,CBP,"1,100,000.00","1,300,000.00","2,000,000.00","2,000,000.00","2,400,000.00","1,500,000.00"
+Type of Video Surveillance,Body-worn and vehicle-mounted cameras,Immersive Concepts,CBP,,,,,"183,000.00","328,000.00"
+Type of Video Surveillance,Body-worn and vehicle-mounted cameras,Affigent,CBP,,,,,,"222,000.00"
+Type of Video Surveillance,Mobile security cameras,LiveView Technologies,ICE,"760,000.00",,,,,
+Type of Data Purchase,Social media monitoring and open-source intelligence,General Dynamics,ICE,"934,000.00","6,600,000.00","11,400,000.00","12,600,000.00","12,000,000.00","11,100,000.00"
+Type of Data Purchase,Social media monitoring and open-source intelligence,Fivecast,"ICE, CBP, USSS",,"1,700,000.00","3,000,000.00","2,900,000.00","1,200,000.00",
+Type of Data Purchase,Social media monitoring and open-source intelligence,Barbaricum,"ICE, CBP",,"657,000.00","1,100,000.00","1,100,000.00","2,400,000.00","1,100,000.00"
+Type of Data Purchase,Social media monitoring and open-source intelligence,Skopenow,"ICE, USSS",,"20,000.00","1,300,000.00","1,400,000.00","984,000.00","960,000.00"
+Type of Data Purchase,Social media monitoring and open-source intelligence,Marinus Analytics,"ICE, CBP, USCIS","99,000.00","714,000.00","432,000.00","419,000.00","1,000,000.00","795,000.00"
+Type of Data Purchase,Social media monitoring and open-source intelligence,Zignal Labs,"ICE, USSS",,"1,900,000.00","379,000.00","370,000.00","361,000.00","352,000.00"
+Type of Data Purchase,Social media monitoring and open-source intelligence,ShadowDragon,ICE,,"90,000.00","1,200,000.00","1,200,000.00","87,000.00","602,000.00"
+Type of Data Purchase,Social media monitoring and open-source intelligence,Authentic8,"ICE, USSS, S&T","5,000.00","287,000.00","474,000.00","591,000.00","534,000.00","519,000.00"
+Type of Data Purchase,Social media monitoring and open-source intelligence,OSINT Combine,"ICE, CBP, USSS","99,000.00","1,700,000.00","245,000.00","173,000.00",,
+Type of Data Purchase,Social media monitoring and open-source intelligence,Seerist,CBP,,,,,"718,000.00",
+Type of Data Purchase,Social media monitoring and open-source intelligence,GeoSpark Analytics,CBP,,,,,,"661,000.00"
+Type of Data Purchase,Social media monitoring and open-source intelligence,Team Cymru,ICE,,"130,000.00","130,000.00",,,"295,000.00"
+Type of Data Purchase,Social media monitoring and open-source intelligence,Giant Oak,ICE,,,,,"-138,000.00","348,000.00"
+Type of Data Purchase,Commercial data (not including real-time location data),Relx (LexisNexis),"ICE, CBP, USCIS, FPS","8,300,000.00","7,400,000.00","8,700,000.00","9,500,000.00","7,500,000.00","3,900,000.00"
+Type of Data Purchase,Commercial data (not including real-time location data),Thomson Reuters,"ICE, Chief Information Officer",,"7,200,000.00","6,500,000.00","6,300,000.00","10,100,000.00","1,400,000.00"
+Type of Data Purchase,Commercial data (not including real-time location data),Thundercat Technology,ICE,"10,000,000.00",,,,,
+Type of Data Purchase,Commercial data (not including real-time location data),Whooster,"ICE, USSS","100,000.00","344,000.00","639,000.00","585,000.00","71,000.00","71,000.00"
+Type of Data Purchase,Commercial data (not including real-time location data),Equifax,ICE,,"69,000.00","66,000.00","64,000.00","41,000.00","40,000.00"
+Type of Data Purchase,Commercial data (not including real-time location data),Transunion,USSS,"52,000.00",,,,,
+Type of Data Purchase,Skip tracing,Capgemini,ICE,,"12,200,000.00",,,,
+Type of Data Purchase,Skip tracing,SOS International,ICE,,"8,600,000.00",,,,
+Type of Data Purchase,Skip tracing,Global Recovery Group,ICE,"7,200,000.00","1,300,000.00",,,,
+Type of Data Purchase,Skip tracing,Bluehawk,ICE,,"2,700,000.00",,,,
+Type of Data Purchase,Skip tracing,GEO Group,ICE,,"1,600,000.00",,,,
+Type of Data Purchase,Skip tracing,Constellis,ICE,,"1,500,000.00",,,,
+Type of Data Purchase,Skip tracing,MVM,ICE,"1,400,000.00",,,,,
+Type of Data Purchase,Skip tracing,National Protective Services,ICE,,"910,000.00",,,,
+Type of Data Purchase,Skip tracing,Constellation,ICE,,"767,000.00",,,,
+Type of Data Purchase,Skip tracing,Government Support Services,ICE,,"741,000.00",,,,
+Type of Data Purchase,Skip tracing,AI Solutions 87,ICE,,"637,000.00",,,,
+Type of Data Purchase,Skip tracing,Gravitas Professional Services,ICE,,"428,000.00",,,,
+Type of Data Purchase,Skip tracing,Fraud Inc,ICE,,"348,000.00",,,,
+Type of Data Purchase,Skip tracing,Response AI Solutions,ICE,,"128,000.00",,,,
+Type of Data Purchase,Skip tracing,Enprovera,ICE,,"35,000.00",,,,
+Type of Data Analysis Tool,"Investigative Case Management (ICM), FALCON, Immigration OS, & Enhanced Leads Identification and Targeting for Enforcement (ELITE)",Palantir,ICE,"143,500,000.00","81,100,000.00","20,400,000.00","20,500,000.00","27,000,000.00","24,200,000.00"
+Type of Data Analysis Tool,RAVEn,Booz Allen Hamilton,ICE,"6,200,000.00","12,200,000.00","15,500,000.00","18,300,000.00","12,200,000.00","11,600,000.00"
+Type of Data Analysis Tool,RAVEn,Acuity,ICE,,"1,500,000.00","12,600,000.00","15,800,000.00","20,900,000.00",
+Type of Data Analysis Tool,RAVEn,Alethix,ICE,,,"16,000,000.00","12,700,000.00","11,500,000.00","6,500,000.00"
+Type of Data Analysis Tool,RAVEn,ESRI,ICE,,,,,"290,000.00",
+Type of Data Analysis Tool,RAVEn,Panamerica Computers,ICE,,,,,,"95,000.00"
+Type of Data Analysis Tool,Project SAFEHAVEN,Edge Ops,ICE,"12,200,000.00",,,,,
+Type of Data Analysis Tool,LeadTrac,Strategic Operations Solutions,ICE,,"462,000.00","911,000.00","907,000.00","898,000.00","1,300,000.00"
+Type of Data Analysis Tool,Other data analysis,MetroIBR,USCIS,"-577,000.00","21,900,000.00","19,200,000.00","25,900,000.00","9,700,000.00",
+Type of Data Analysis Tool,Other data analysis,Palantir,USSS,"18,700,000.00",,,,,
+Type of Data Analysis Tool,Other data analysis,Deloitte,ICE,,"2,100,000.00","2,000,000.00","2,700,000.00","936,000.00","1,400,000.00"
+Type of Data Analysis Tool,Other data analysis,Relx (Lexis Nexis),USSS,"5,100,000.00",,,,,
+Type of Data Analysis Tool,Other data analysis,Thomson Reuters,CBP,,,,,"1,100,000.00","1,100,000.00"
+Type of Data Analysis Tool,Other data analysis,AT&T,ICE,,"2,100,000.00",,,,
+Type of Data Analysis Tool,Other data analysis,Hyland,USCIS,"1,200,000.00",,,,,
