@@ -436,6 +436,15 @@ thead th {
     width: 150px;
   }
 }
+.company-total {
+  margin-top: 2px;
+  margin-bottom: 4px;
+  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #007194;
+  font-variant-numeric: tabular-nums;
+}
 @media (max-width: 650px) {
   tr {
     position: relative;
@@ -581,13 +590,6 @@ function makeSparkline(yearly) {
   const minYear = entries[0].year;
   const maxYear = entries[entries.length - 1].year;
 
-
-    const totalValue = entries.reduce((sum, d) => sum + d.value, 0);
-    const totalLabel =
-  entries.length > 1
-    ? `${minYear}–${maxYear} Total: ${formatMoney(totalValue)}`
-    : `${minYear}: ${formatMoney(totalValue)}`;
-
   const minValue = Math.min(...entries.map(d => d.value));
   const maxValue = Math.max(...entries.map(d => d.value));
   const axisLabel = formatCompactMoney(maxValue);
@@ -643,8 +645,8 @@ function makeSparkline(yearly) {
   return `
     <svg class="sparkline" viewBox="0 0 ${width} ${height}" aria-label="Yearly values">
       <text
-        x="${width}"
-        y="${maxPointY + 4}"
+        x="${width-rightPad+4}"
+        y="${maxPointY + 2}"
         font-size="8"
         font-family="BentonStrong"
         text-anchor="start"
@@ -654,7 +656,7 @@ function makeSparkline(yearly) {
    <line
       x1="${connectorEndX+2}"
       y1="${maxPointY}"
-      x2="${width-2}"
+      x2="${width-rightPad}"
       y2="${maxPointY}"
       stroke="#000"
       stroke-width=".5"
@@ -702,9 +704,6 @@ function makeSparkline(yearly) {
         text-anchor="end"
       >${maxYear}</text>
     </svg>
-    <div class="spark-total">
-  ${totalLabel}
-</div>
   `;
 }
 
@@ -783,8 +782,8 @@ const minYear = Math.min(...allYears);
 const maxYear = Math.max(...allYears);
 
 const summary =
-  `${companyCount} ${companyCount === 1 ? "company" : "companies"} • ` +
-  `${agencyCount} ${agencyCount === 1 ? "agency" : "agencies"} • ` +
+  // `${companyCount} ${companyCount === 1 ? "company" : "companies"} • ` +
+  // `${agencyCount} ${agencyCount === 1 ? "agency" : "agencies"} • ` +
   `${minYear}–${maxYear} total: ${formatMoney(sectionTotal)}`;
 
   return `
@@ -794,6 +793,8 @@ const summary =
 
     <div class="company-grid">
       ${companies.map(company => {
+        const companyTotal = Object.values(company.yearly || {})
+        .reduce((sum, value) => sum + Number(value || 0), 0);
         const yearlyEntries = company.yearly
           ? Object.entries(company.yearly)
               .map(([year, value]) => ({
@@ -820,10 +821,14 @@ const summary =
             <div class="company-topline">
               <div class="company-name-wrap">
                 <div class="company-name">${highlightSearch(company.name)}</div>
-                ${renderAgencies(company)}
+
+                  <div class="company-total">
+                    ${formatMoney(companyTotal)}
+                  </div>
+
+                  ${renderAgencies(company)}
               </div>
             </div>
-
             <div class="company-detail">
               ${detail}
             </div>
@@ -953,9 +958,10 @@ function renderTable(data) {
   `).join("");
 }
 const DATA_FILES = {
-  descriptions: "descriptions.csv",
-  companies: "companies.csv",
-  references: "references.csv"
+  descriptions: "descriptions_FINAL.csv",
+  companies: "companies_FINAL.csv",
+  references: "references.csv",
+  footnotes:"footnotes_FINAL.csv"
 };
 
 const tabs = [
