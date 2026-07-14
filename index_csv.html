@@ -897,57 +897,63 @@ function renderCompanies(companies, allCompanies = companies) {
 function renderLinks(links, className) {
   const useCasePrefix = "https://www.dhs.gov/ai/use-case-inventory/";
 
-  const useCaseLinks = links.filter(link =>
-    link.url.startsWith(useCasePrefix)
-  );
+  let html = `<div class="link-list ${className}">`;
 
-  const regularLinks = links.filter(link =>
-    !link.url.startsWith(useCasePrefix)
-  );
+  let useCaseBuffer = [];
 
-  return `
-    <div class="link-list ${className}">
+  function flushUseCaseBuffer() {
+    if (!useCaseBuffer.length) return;
 
-      ${regularLinks.map(link => `
-        <a
-          href="${link.url}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ${highlightSearch(link.label)}
-        </a>
-      `).join("")}
-
-      ${useCaseLinks.length ? `
-        <div class="usecase-group">
-
-  <div class="usecase-header">
-    DHS AI Use Case Inventory
-  </div>
-
-  <ul class="usecase-list">
-    ${useCaseLinks.map(link => `
-      <li>
-        <a
-          href="${link.url}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ${highlightSearch(link.label)}
-        </a>
-      </li>
-    `).join("")}
-  </ul>
-
-</div>
-
+    html += `
+      <div class="usecase-group">
+        <div class="usecase-header">
+          DHS AI Use Case Inventory
         </div>
-      ` : ""}
 
-    </div>
-  `;
+        <ul class="usecase-list">
+          ${useCaseBuffer.map(link => `
+            <li>
+              <a
+                href="${link.url}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ${highlightSearch(link.label)}
+              </a>
+            </li>
+          `).join("")}
+        </ul>
+      </div>
+    `;
+
+    useCaseBuffer = [];
+  }
+
+  (links || []).forEach(link => {
+    if (link.url.startsWith(useCasePrefix)) {
+      useCaseBuffer.push(link);
+    } else {
+      flushUseCaseBuffer();
+
+      html += `
+        <a
+          href="${link.url}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ${highlightSearch(link.label)}
+        </a>
+      `;
+    }
+  });
+
+  // Flush any remaining grouped links at the end
+  flushUseCaseBuffer();
+
+  html += `</div>`;
+
+  return html;
 }
-
 
 function getCompanyAgencies(company) {
   if (!company) return [];
