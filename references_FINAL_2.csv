@@ -10,13 +10,13 @@ Type of Biometric Collection or Technology,Facial recognition,"Further Informati
 Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,DHS AI Use Case Inventory (January 2026):,https://www.dhs.gov/ai/use-case-inventory,,heading
 Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,CBP Mobile Fortify (DHS-2731),,,bullet
 Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,ICE Mobile Fortify (DHS-2577),,,bullet
-Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,USSS Criminal Investigations (DHS-415),,,
-Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,CBP Facial Recognition for National Security and Transnational Criminal Organizations (DHS-2729),,,
-Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,CBP Unified Processing/Mobile Intake (DHS-398),,,
-Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,ICE Facial Recognition for Locating Vulnerable Populations (DHS-2457),,,
-Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,ICE Facial Recognition for National Security Investigations (DHS-2458),,,
-Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,ICE Facial Recognition for Investigations of Transnational Criminal Organizations (DHS-2459),,,
-Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,ICE Facial Recognition for Investigations of Child Sexual Exploitation and Abuse (DHS-362),,,
+Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,USSS Criminal Investigations (DHS-415),,,bullet
+Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,CBP Facial Recognition for National Security and Transnational Criminal Organizations (DHS-2729),,,bullet
+Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,CBP Unified Processing/Mobile Intake (DHS-398),,,bullet
+Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,ICE Facial Recognition for Locating Vulnerable Populations (DHS-2457),,,bullet
+Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,ICE Facial Recognition for National Security Investigations (DHS-2458),,,bullet
+Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,ICE Facial Recognition for Investigations of Transnational Criminal Organizations (DHS-2459),,,bullet
+Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,ICE Facial Recognition for Investigations of Child Sexual Exploitation and Abuse (DHS-362),,,bullet
 Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,ICE PTA: ICE Task Force Module Mobile App (September 2025),https://www.documentcloud.org/documents/28200283-ice-task-force-module-app/,,
 Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,CBP PTA: Mobile Fortify Mobile Application for ICE Enforcement and Removal Operations (February 2025),https://www.documentcloud.org/documents/26209262-mobile-fortify-pta/,,
 Type of Biometric Collection or Technology,Facial recognition,DHS Policies and Other Resources,USSS PIA-033: USSS Use of Facial Recognition Technology (September 2024),https://www.dhs.gov/sites/default/files/2024-09/24_0912_privacy-pia-usss033-facialrecognition_0.pdf,,
@@ -182,7 +182,7 @@ Type of Data Analysis Tool,Repository for Analytics in a Virtualized Environment
 Type of Data Analysis Tool,Repository for Analytics in a Virtualized Environment (RAVEn),DHS Policies and Other Resources,DHS AI Use Case Inventory (January 2026):,https://www.dhs.gov/ai/use-case-inventory/ice,,heading
 Type of Data Analysis Tool,Repository for Analytics in a Virtualized Environment (RAVEn),DHS Policies and Other Resources,ICE Investigative Prioritization Aggregator (DHS-125) ,,,bullet
 Type of Data Analysis Tool,Repository for Analytics in a Virtualized Environment (RAVEn),DHS Policies and Other Resources,ICE Translation and Transcription for Investigative Data (DHS-2427) ,,,bullet
-Type of Data Analysis Tool,Repository for Analytics in a Virtualized Environment (RAVEn),DHS Policies and Other Resources,ICE Normalization Services (DHS-P1),,,
+Type of Data Analysis Tool,Repository for Analytics in a Virtualized Environment (RAVEn),DHS Policies and Other Resources,ICE Normalization Services (DHS-P1),,,bullet
 Type of Data Analysis Tool,Repository for Analytics in a Virtualized Environment (RAVEn),DHS Policies and Other Resources,ICE PIA-055: Repository for Analytics in a Virtualized Environment (June 2025),https://www.dhs.gov/sites/default/files/2025-06/25_0618_priv_pia-ice-055-raven-appendix-update.pdf,,
 Type of Data Analysis Tool,Project SAFEHAVEN,"Further Information on Capabilities, Uses, and Abuses","The Lever, The ICE Surveillance Firm with Missing Executives and Phantom Clients (May 2026)",https://www.levernews.com/the-ice-surveillance-firm-with-missing-executives-and-phantom-clients/,ITALICS,
 Type of Data Analysis Tool,Project SAFEHAVEN,"Further Information on Capabilities, Uses, and Abuses","The Lever, Inside ICE's $12 Million Plan to Map Immigrants Patterns of Life (April 2026)",https://www.levernews.com/inside-ices-12-million-plan-to-map-immigrants-patterns-of-life/,ITALICS,
