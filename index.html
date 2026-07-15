@@ -109,6 +109,72 @@ h1 {
   color: #dbdada;
 }
 
+/* search navigation */
+
+.search-input-row {
+  display: flex;
+  align-items: stretch;
+  width: 320px;
+  max-width: 100%;
+}
+
+.search-input-row .table-search {
+  width: auto;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.search-nav {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid #000;
+  border-left: 0;
+  background: #fff;
+}
+
+.search-count {
+  display: flex;
+  align-items: center;
+  min-width: 52px;
+  padding: 0 7px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.search-nav-btn {
+  width: 30px;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid #000;
+  background: #fff;
+  color: #000;
+  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.search-nav-btn:hover:not(:disabled) {
+  background: #000;
+  color: #fff;
+}
+
+.search-nav-btn:disabled {
+  color: #aaa;
+  cursor: default;
+}
+
+.search-highlight {
+  background: #ffcf01;
+  color: #000;
+}
+
+.search-highlight.is-current-search-match {
+  background: #007194;
+  color: #fff;
+  outline: 2px solid #007194;
+  outline-offset: 1px;
+}
+
 /* tabs */
 
 .tabs {
@@ -211,6 +277,7 @@ th {
 
 .company-section-total {
   margin-bottom: 12px;
+  font-family:"BentonStrong"
 }
 
 .spark-total {
@@ -310,7 +377,7 @@ th {
 }
 
 a {
-  color: #000;
+  color: #007194;
   text-decoration: none;
 }
 
@@ -330,7 +397,7 @@ thead th {
   margin-top: 10px;
   margin-left: 16px;
 }
-
+/* 
 .usecase-header {
   font-family: "BentonStrong", Helvetica, Arial, sans-serif;
   font-size: 10px;
@@ -338,7 +405,7 @@ thead th {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin-bottom: 4px;
-}
+} */
 
 .usecase-link {
   display: block;
@@ -363,6 +430,20 @@ thead th {
 .usecase-list li {
   margin: 2px 0;
 }
+
+.reference-bullet-list,
+.usecase-list {
+  margin: 2px 0;
+  padding-left: 18px;
+}
+
+.reference-bullet-list li,
+.usecase-list li {
+  margin: 0;
+  padding: 0;
+  line-height: 1.25;
+}
+
 /* mobile */
 
 @media (max-width: 650px) {
@@ -398,8 +479,20 @@ thead th {
     min-height: 24px;
   }
 
+  .search-input-row {
+    width: 100%;
+  }
+
+  .search-count {
+    min-width: 48px;
+    font-size: 10px;
+  }
+
+  .search-nav-btn {
+    width: 28px;
+  }
+
 .section-label {
-  
   color: #6CBAD6;
 }
 
@@ -542,15 +635,39 @@ thead th {
   </div>
 
   <div class="search-control">
-  <label class="filter-label" for="search-box">Search</label>
-  <input
-    id="search-box"
-    class="table-search"
-    type="search"
-    placeholder="Search types, companies, agencies..."
-    oninput="setSearchFilter(this.value)"
-  />
-</div>
+    <label class="filter-label" for="search-box">Search</label>
+
+    <div class="search-input-row">
+      <input
+        id="search-box"
+        class="table-search"
+        type="search"
+        placeholder="Search types, companies, agencies..."
+        oninput="setSearchFilter(this.value)"
+        onkeydown="handleSearchKeydown(event)"
+      />
+
+      <div class="search-nav" aria-label="Search result navigation">
+        <span class="search-count" id="search-count" aria-live="polite">0 / 0</span>
+        <button
+          class="search-nav-btn"
+          id="search-prev"
+          type="button"
+          aria-label="Previous search result"
+          onclick="goToPreviousSearchMatch()"
+          disabled
+        >↑</button>
+        <button
+          class="search-nav-btn"
+          id="search-next"
+          type="button"
+          aria-label="Next search result"
+          onclick="goToNextSearchMatch()"
+          disabled
+        >↓</button>
+      </div>
+    </div>
+  </div>
 
 </div>
 </div>
@@ -570,12 +687,179 @@ thead th {
 
 
 let searchFilter = "";
+let searchMatches = [];
+let activeSearchMatchIndex = -1;
 
 function setSearchFilter(value) {
   searchFilter = value.trim().toLowerCase();
+  activeSearchMatchIndex = -1;
   renderCurrentData();
-  scrollTableToTop();
+  refreshSearchMatches(true);
 }
+
+function refreshSearchMatches(jumpToFirst = false) {
+  searchMatches = Array.from(
+    document.querySelectorAll("mark.search-highlight")
+  );
+
+  if (!searchFilter || searchMatches.length === 0) {
+    activeSearchMatchIndex = -1;
+    updateSearchNavigator();
+    return;
+  }
+
+  if (jumpToFirst || activeSearchMatchIndex < 0) {
+    activeSearchMatchIndex = 0;
+  } else if (activeSearchMatchIndex >= searchMatches.length) {
+    activeSearchMatchIndex = searchMatches.length - 1;
+  }
+
+  activateSearchMatch(activeSearchMatchIndex, jumpToFirst);
+}
+
+function activateSearchMatch(index, shouldScroll = true) {
+  searchMatches.forEach(match => {
+    match.classList.remove("is-current-search-match");
+  });
+
+  if (!searchMatches.length) {
+    activeSearchMatchIndex = -1;
+    updateSearchNavigator();
+    return;
+  }
+
+  activeSearchMatchIndex =
+    ((index % searchMatches.length) + searchMatches.length) %
+    searchMatches.length;
+
+  const activeMatch = searchMatches[activeSearchMatchIndex];
+  activeMatch.classList.add("is-current-search-match");
+
+  if (shouldScroll) {
+    scrollToSearchMatch(activeMatch);
+  }
+
+  updateSearchNavigator();
+}
+
+function scrollToSearchMatch(match) {
+  if (!match) return;
+
+  const stickyHeaderHeight =
+    document.querySelector(".sticky-header")?.offsetHeight || 0;
+
+  const desktopTableHeaderHeight =
+    window.matchMedia("(min-width: 651px)").matches
+      ? document.querySelector("thead")?.offsetHeight || 0
+      : 0;
+
+  const offset = stickyHeaderHeight + desktopTableHeaderHeight + 20;
+  const targetY =
+    match.getBoundingClientRect().top + window.pageYOffset - offset;
+
+  window.scrollTo({
+    top: Math.max(0, targetY),
+    behavior: "smooth"
+  });
+}
+
+function updateSearchNavigator() {
+  const count = document.getElementById("search-count");
+  const previous = document.getElementById("search-prev");
+  const next = document.getElementById("search-next");
+  const hasMatches = searchMatches.length > 0;
+
+  if (count) {
+    count.textContent = hasMatches
+      ? `${activeSearchMatchIndex + 1} / ${searchMatches.length}`
+      : "0 / 0";
+  }
+
+  if (previous) previous.disabled = !hasMatches;
+  if (next) next.disabled = !hasMatches;
+}
+
+function goToNextSearchMatch() {
+  if (!searchMatches.length) return;
+  activateSearchMatch(activeSearchMatchIndex + 1);
+}
+
+function goToPreviousSearchMatch() {
+  if (!searchMatches.length) return;
+  activateSearchMatch(activeSearchMatchIndex - 1);
+}
+
+function handleSearchKeydown(event) {
+  if (event.key !== "Enter") return;
+
+  event.preventDefault();
+
+  if (event.shiftKey) {
+    goToPreviousSearchMatch();
+  } else {
+    goToNextSearchMatch();
+  }
+}
+function renderDescription(description, links = []) {
+  const text = String(description || "");
+
+  if (!text) return "";
+
+  const validLinks = (links || []).filter(link =>
+    link &&
+    link.word &&
+    link.url
+  );
+
+  if (!validLinks.length) {
+    return highlightSearch(text);
+  }
+
+  const matches = [];
+
+  validLinks.forEach(link => {
+    const searchWord = String(link.word);
+    const index = text.toLowerCase().indexOf(searchWord.toLowerCase());
+
+    if (index === -1) return;
+
+    const end = index + searchWord.length;
+
+    const overlaps = matches.some(match =>
+      index < match.end && end > match.start
+    );
+
+    if (!overlaps) {
+      matches.push({
+        start: index,
+        end,
+        url: link.url
+      });
+    }
+  });
+
+  if (!matches.length) {
+    return highlightSearch(text);
+  }
+
+  matches.sort((a, b) => a.start - b.start);
+
+  let html = "";
+  let position = 0;
+
+  matches.forEach(match => {
+    html += highlightSearch(text.slice(position, match.start));
+
+   html += `<a class="description-link" href="${match.url}" target="_blank" rel="noopener noreferrer">${highlightSearch(text.slice(match.start, match.end))}</a>`;
+
+    position = match.end;
+  });
+
+  html += highlightSearch(text.slice(position));
+
+  return html;
+}
+
 function highlightSearch(text) {
   if (!searchFilter || !text) return text || "";
 
@@ -828,10 +1112,17 @@ function renderCompanies(companies, allCompanies = companies) {
       .filter(Number.isFinite)
   );
 
-  const summary = allYears.length
-    ? `${Math.min(...allYears)}–${Math.max(...allYears)} total: ${formatMoney(sectionTotal)}`
-    : `Total: ${formatMoney(sectionTotal)}`;
+  const uniqueYears = [...new Set(allYears)].sort((a, b) => a - b);
 
+let summary;
+
+if (uniqueYears.length === 0) {
+  summary = `DHS total: At least ${formatMoney(sectionTotal)}`;
+} else if (uniqueYears.length === 1) {
+  summary = `${uniqueYears[0]} DHS total: At least ${formatMoney(sectionTotal)}`;
+} else {
+  summary = `${uniqueYears[0]}–${uniqueYears[uniqueYears.length - 1]} DHS total: At least ${formatMoney(sectionTotal)}`;
+}
   return `
     <div class="company-section-total">
       ${summary}
@@ -895,80 +1186,61 @@ function renderCompanies(companies, allCompanies = companies) {
   `;
 }
 function renderLinks(links, className) {
-  const useCasePrefix = "https://www.dhs.gov/ai/use-case-inventory/";
-
   let html = `<div class="link-list ${className}">`;
+  let bulletBuffer = [];
 
-  let useCaseBuffer = [];
+  function formatLinkLabel(link) {
+    const label = highlightSearch(link.label);
 
-  function renderLink(link) {
+    return link.italic
+      ? `<em>${label}</em>`
+      : label;
+  }
+
+  function renderLinkContent(link) {
+    const label = formatLinkLabel(link);
+
     if (link.url && link.url.trim() !== "") {
-      return `
-        <a
-          href="${link.url}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ${highlightSearch(link.label)}
-        </a>
-      `;
+      return `<a href="${link.url}" target="_blank" rel="noopener noreferrer">${label}</a>`;
     }
 
+    return `<span class="link-text">${label}</span>`;
+  }
+
+  function renderRegularLink(link) {
     return `
-      <div class="link-text">
-        ${highlightSearch(link.label)}
+      <div class="link-text-row">
+        ${renderLinkContent(link)}
       </div>
     `;
   }
 
-  function flushUseCaseBuffer() {
-    if (!useCaseBuffer.length) return;
+  function flushBulletBuffer() {
+    if (!bulletBuffer.length) return;
 
     html += `
-      <div class="usecase-group">
-        <div class="usecase-header">
-          DHS AI Use Case Inventory
-        </div>
-
-        <ul class="usecase-list">
-          ${useCaseBuffer.map(link => `
-            <li>
-              ${
-                link.url && link.url.trim() !== ""
-                  ? `
-                    <a
-                      href="${link.url}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      ${highlightSearch(link.label)}
-                    </a>
-                  `
-                  : `
-                    <span class="link-text">
-                      ${highlightSearch(link.label)}
-                    </span>
-                  `
-              }
-            </li>
-          `).join("")}
-        </ul>
-      </div>
+      <ul class="reference-bullet-list">
+        ${bulletBuffer.map(link => `
+          <li>
+            ${renderLinkContent(link)}
+          </li>
+        `).join("")}
+      </ul>
     `;
 
-    useCaseBuffer = [];
+    bulletBuffer = [];
   }
 
   (links || []).forEach(link => {
-    if (link.url && link.url.startsWith(useCasePrefix)) {
-      useCaseBuffer.push(link);
+    if (link.bullet) {
+      bulletBuffer.push(link);
     } else {
-      flushUseCaseBuffer();
-      html += renderLink(link);
+      flushBulletBuffer();
+      html += renderRegularLink(link);
     }
   });
 
-  flushUseCaseBuffer();
+  flushBulletBuffer();
 
   html += `</div>`;
 
@@ -1047,6 +1319,7 @@ function renderCurrentData() {
     .map(row => filterCompaniesForAgency(row, activeAgency));
 
   renderTable(filteredData);
+  refreshSearchMatches(false);
 
   const countEl = document.getElementById("filter-count");
 
@@ -1063,7 +1336,9 @@ function renderTable(data) {
   <div class="entity-name">${highlightSearch(row.entity)}</div>
 </div>
 
-        <div class="description">${highlightSearch(row.description)}</div>
+       <div class="description">
+  ${renderDescription(row.description, row.descriptionLinks)}
+</div>
       </td>
 
       <td data-label="Companies">
@@ -1284,6 +1559,7 @@ function buildRowsFromCSVs(descriptions, companies, references) {
         sectionLabel: tab ? tab.label : cleanCategory,
         entity: cleanSurveillanceType,
         description: "",
+        descriptionLinks: [],
         companies: [],
         sourceLinks: [],
         actionLinks: []
@@ -1292,15 +1568,39 @@ function buildRowsFromCSVs(descriptions, companies, references) {
 
     return rowsByKey.get(key);
   }
+descriptions.forEach(item => {
+  const category = getCSVValue(item, ["Category"]);
+  const surveillanceType = getCSVValue(item, [
+    "Surveillance Type",
+    "Survaillence Type",
+    "SurveillanceType"
+  ]);
 
-  descriptions.forEach(item => {
-    const category = item["Category"];
-    const surveillanceType = item["Surveillance Type"];
-    if (!normalizeText(category) || !normalizeText(surveillanceType)) return;
+  if (!normalizeText(category) || !normalizeText(surveillanceType)) return;
 
-    const row = ensureRow(category, surveillanceType);
-    row.description = normalizeText(item["Description"]);
-  });
+  const row = ensureRow(category, surveillanceType);
+
+  row.description = normalizeText(
+    getCSVValue(item, ["Description"])
+  );
+
+  row.descriptionLinks = [1, 2, 3]
+    .map(number => ({
+      word: normalizeText(
+        getCSVValue(item, [
+          `Link ${number} word`,
+          `Link ${number} Word`
+        ])
+      ),
+      url: normalizeText(
+        getCSVValue(item, [
+          `Link ${number} link`,
+          `Link ${number} Link`
+        ])
+      )
+    }))
+    .filter(link => link.word && link.url);
+});
 
   companies.forEach(item => {
     const category = getCSVValue(item, ["Category"]);
@@ -1367,10 +1667,18 @@ references.forEach(item => {
 
   const column = getReferenceColumn(linkType);
 
-  row[column].push({
-    label,
-    url
-  });
+row[column].push({
+  label,
+  url,
+
+  italic: normalizeText(
+    getCSVValue(item, ["italic", "Italic"])
+  ).toUpperCase() === "ITALICS",
+
+  bullet: normalizeText(
+    getCSVValue(item, ["group", "Group"])
+  ).toLowerCase() === "bullet"
+});
 });
   return Array.from(rowsByKey.values());
 }
