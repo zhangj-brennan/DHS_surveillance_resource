@@ -384,6 +384,14 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+.footnote-marker {
+  font-family: "BentonStrong", Helvetica, Arial, sans-serif;
+  font-size: 0.7em;
+  line-height: 0;
+  vertical-align: super;
+  margin-left: 1px;
+}
 thead th {
   position: sticky;
   top: var(--sticky-offset);
@@ -1328,8 +1336,8 @@ function renderCurrentData() {
 function renderTable(data) {
   const tbody = document.getElementById("table-body");
 
-  tbody.innerHTML = data.map(row => `
-    <tr>
+  tbody.innerHTML = data.map((row, rowIndex) => `
+    <tr data-row-index="${rowIndex}">
      <td data-label="Entity">
       <div class="mobile-row-sticky-title">
   ${row.sectionLabel ? `<div class="section-label">${highlightSearch(row.sectionLabel)}</div>` : ""}
@@ -1354,11 +1362,17 @@ function renderTable(data) {
       </td>
     </tr>
   `).join("");
+
+  Array.from(tbody.querySelectorAll("tr[data-row-index]")).forEach(tableRow => {
+    const rowIndex = Number(tableRow.dataset.rowIndex);
+    const row = data[rowIndex];
+    applyFootnotesToElement(tableRow, row?.footnotes || []);
+  });
 }
 const DATA_FILES = {
-  descriptions: "descriptions_FINAL.csv",
+  descriptions: "NB Edits - descriptions_FINAL.csv",
   companies: "companies_FINAL.csv",
-  references: "references_FINAL_2.csv",
+  references: "NB Edits - references_FINAL.csv",
   footnotes:"footnotes_FINAL.csv"
 };
 
@@ -1543,7 +1557,7 @@ function makeLinkLabel(url) {
   }
 }
 
-function buildRowsFromCSVs(descriptions, companies, references) {
+function buildRowsFromCSVs(descriptions, companies, references, footnotes) {
   const rowsByKey = new Map();
 
   function ensureRow(category, surveillanceType) {
@@ -1560,6 +1574,7 @@ function buildRowsFromCSVs(descriptions, companies, references) {
         entity: cleanSurveillanceType,
         description: "",
         descriptionLinks: [],
+        footnotes: [],
         companies: [],
         sourceLinks: [],
         actionLinks: []
@@ -1680,7 +1695,142 @@ row[column].push({
   ).toLowerCase() === "bullet"
 });
 });
+
+(footnotes || []).forEach(item => {
+  const category = getCSVValue(item, ["Category"]);
+  const surveillanceType = getCSVValue(item, [
+    "Surveillance Type",
+    "Survaillence Type",
+    "SurveillanceType"
+  ]);
+  const number = normalizeText(
+    getCSVValue(item, ["Footnote number", "Footnote Number", "Footnote"])
+  );
+  const precedingPhrase = normalizeText(
+    getCSVValue(item, [
+      "Preceeding phrase",
+      "Preceding phrase",
+      "Preceeding Phrase",
+      "Preceding Phrase"
+    ])
+  );
+
+  if (!surveillanceType || !number || !precedingPhrase) return;
+
+  const matchingRow = Array.from(rowsByKey.values()).find(row =>
+    normalizeText(row.entity).toLowerCase() === surveillanceType.toLowerCase() &&
+    footnoteCategoryMatchesRow(category, row)
+  );
+
+  if (!matchingRow) {
+    console.warn("Footnote row not found:", category, surveillanceType, number);
+    return;
+  }
+
+  matchingRow.footnotes.push({
+    number,
+    precedingPhrase,
+    text: normalizeText(getCSVValue(item, ["", "Footnote text", "Text"])),
+    links: [1, 2]
+      .map(linkNumber => ({
+        word: normalizeText(
+          getCSVValue(item, [`Link ${linkNumber} word`, `Link ${linkNumber} Word`])
+        ),
+        url: normalizeText(
+          getCSVValue(item, [`Link ${linkNumber} link`, `Link ${linkNumber} Link`])
+        )
+      }))
+      .filter(link => link.word && link.url)
+  });
+});
+
   return Array.from(rowsByKey.values());
+}
+
+function footnoteCategoryMatchesRow(footnoteCategory, row) {
+  const normalizedFootnoteCategory = normalizeText(footnoteCategory).toLowerCase();
+  const normalizedRowCategory = normalizeText(row.category).toLowerCase();
+  const normalizedSectionLabel = normalizeText(row.sectionLabel).toLowerCase();
+
+  if (!normalizedFootnoteCategory) return true;
+
+  const aliases = {
+    "video surveillance": ["type of video surveillance", "video surveillance"],
+    "biometrics": [
+      "type of biometric collection or technology",
+      "biometric collection, storage, and identification",
+      "biometrics"
+    ],
+    "location tracking": [
+      "type of location tracking",
+      "real-time/detailed location tracking",
+      "location tracking"
+    ],
+    "phone access tool": [
+      "type of phone access tools",
+      "tools to access phone content",
+      "phone access tool"
+    ],
+    "data purchases": ["type of data purchase", "data purchases"],
+    "data analysis tools": ["type of data analysis tool", "data analysis tools"]
+  };
+
+  const acceptedCategories = aliases[normalizedFootnoteCategory] || [normalizedFootnoteCategory];
+
+  return acceptedCategories.includes(normalizedRowCategory) ||
+    acceptedCategories.includes(normalizedSectionLabel);
+}
+
+function applyFootnotesToElement(element, footnotes = []) {
+  if (!element || !footnotes.length) return;
+
+  footnotes.forEach(footnote => {
+    const phrase = String(footnote.precedingPhrase || "");
+    if (!phrase) return;
+
+    const walker = document.createTreeWalker(
+      element,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode(node) {
+          const parent = node.parentElement;
+          if (!parent) return NodeFilter.FILTER_REJECT;
+          if (parent.closest("sup.footnote-marker")) return NodeFilter.FILTER_REJECT;
+          if (parent.closest("script, style")) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      }
+    );
+
+    let textNode;
+    while ((textNode = walker.nextNode())) {
+      const text = textNode.nodeValue || "";
+      const index = text.toLowerCase().indexOf(phrase.toLowerCase());
+      if (index === -1) continue;
+
+      const before = text.slice(0, index + phrase.length);
+      const after = text.slice(index + phrase.length);
+      const fragment = document.createDocumentFragment();
+
+      fragment.appendChild(document.createTextNode(before));
+
+      const marker = document.createElement("sup");
+      marker.className = "footnote-marker";
+      marker.textContent = footnote.number;
+      marker.setAttribute("aria-label", `Footnote ${footnote.number}`);
+      fragment.appendChild(marker);
+
+      fragment.appendChild(document.createTextNode(after));
+      textNode.parentNode.replaceChild(fragment, textNode);
+      return;
+    }
+
+    console.warn(
+      "Footnote phrase not found:",
+      footnote.number,
+      footnote.precedingPhrase
+    );
+  });
 }
 
 function getRowsForTab(index) {
@@ -1809,10 +1959,11 @@ function loadInitialData() {
   Promise.all([
     fetchCSV(DATA_FILES.descriptions),
     fetchCSV(DATA_FILES.companies),
-    fetchCSV(DATA_FILES.references)
+    fetchCSV(DATA_FILES.references),
+    fetchCSV(DATA_FILES.footnotes)
   ])
-    .then(([descriptions, companies, references]) => {
-      const rows = buildRowsFromCSVs(descriptions, companies, references);
+    .then(([descriptions, companies, references, footnotes]) => {
+      const rows = buildRowsFromCSVs(descriptions, companies, references, footnotes);
 
       tabDataCache = tabs.map(tab =>
         rows.filter(row => row.category === tab.category)
